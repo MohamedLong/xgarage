@@ -1,0 +1,73 @@
+server:
+  port: 6060
+  ssl:
+    enabled: true
+    protocol: TLS
+    key-store-type: PKCS12
+    key-store: classpath:xgarage.p12
+    key-store-password: xgarage
+#    key-alias: xgarage
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+    instance:
+      hostname: http://localhost
+
+management:
+  endpoint:
+    gateway: 
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: gateway
+
+spring:
+  security:
+    permitted-urls: /api/v1/document/**,/api/login/**,/api/v1/tenantType/**,/core/api/v1/brand/all, /core/api/v1/carModelType/all, /core/api/v1/carModelYear/all,/core/api/v1/category/all, /core/api/v1/subcategory/all, /api/changeUserRole/**, /api/v1/tenant/**,/api/token/refresh/**,/api/signup/**,/api/web/signup/**,/api/tenant/**,/api/v1/otp/verify/**,/api/v1/otp/forgetPassword/verify/**,/api/v1/otp/send/**,/api/recoverPassword/**,/api/forgetPassword/**,/v2/api-docs/**,/configuration/ui/**,/swagger-resources/**,/configuration/security/**,/v3/api-docs/**, /doc/swagger-ui.html, /doc/swagger-ui/**,/webjars/**
+  application:
+    name: xgarage-api-gateway
+  cloud:
+    gateway:
+      httpclient:
+        ssl:
+          useInsecureTrustManager: true
+          handshake-timeout-millis: 10000
+          close-notify-flush-timeout-millis: 3000
+          close-notify-read-timeout-millis: 0
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedHeaders: "*"
+            allowedMethods: "*"
+      routes:
+        - id: xgarage-kernel-service
+          uri: lb://xgarage-kernel-service/
+          predicates:
+            - Path=/api/**
+          filters:
+            - SetResponseHeader=Access-Control-Allow-Origin, *
+            - SetResponseHeader=Access-Control-Allow-Methods, *
+            - SetResponseHeader=Access-Control-Expose-Headers, *
+        - id: xgarage-core-service
+          uri: lb://xgarage-core-service/
+          predicates:
+            - Path=/core/**
+          filters:
+            - AuthFilter
+            - SetResponseHeader=Access-Control-Allow-Origin, *
+            - SetResponseHeader=Access-Control-Allow-Methods, *
+            - SetResponseHeader=Access-Control-Expose-Headers, *
+        - id: xgarage-shop-service
+          uri: lb://xgarage-shop-service/
+          predicates:
+            - Path=/store/**
+          filters:
+            - AuthFilter
+            - SetResponseHeader=Access-Control-Allow-Origin, *
+            - SetResponseHeader=Access-Control-Allow-Methods, *
+            - SetResponseHeader=Access-Control-Expose-Headers, *
