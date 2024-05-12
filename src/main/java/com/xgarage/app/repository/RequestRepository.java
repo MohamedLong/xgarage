@@ -1,0 +1,60 @@
+package com.xgarage.app.repository;
+
+import com.xgarage.app.dto.RequestUserStatsDto;
+import com.xgarage.app.dto.SupplierVO;
+import org.springframework.data.domain.Page;
+import com.xgarage.app.dto.RequestVO;
+import com.xgarage.app.model.Request;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
+@Repository
+public interface RequestRepository extends JpaRepository<Request, Long> {
+
+    @Query(value = "select r.id as id, r.qty as qty, r.job_id as jobId, (select id from claim where id = r.job_id) as claimId, r.status_id as status, r.submission_date as submissionDate, r.user_id as userId, r.privacy as privacy, (select first_name from users where id = r.user_id) as firstName, r.request_title as requestTitle, (select count(*) from bid where request_id = r.id) as submittedBids, (select count(*) from bid where request_id = r.id and status_id in(select id from status where name_en in('Canceled', 'Rejected'))) as rejectedBids, (select b.id from bid b where b.request_id = r.id and b.status_id in(select id from status where name_en in('In Progress','Approved')) limit 1) as selectedBid from request r where r.status_id not in (select id from status where name_en in ('Completed', 'Canceled')) and r.user_id = :userId order by jobId, id desc", nativeQuery = true)
+    List<RequestVO> findAllByUserId(Long userId, Pageable pageable);
+
+    @Query(value = "select r.id as id, r.qty as qty, r.job_id as jobId, (select id from claim where id = r.job_id) as claimId, r.status_id as status, r.submission_date as submissionDate, r.user_id as userId, r.privacy as privacy, (select first_name from users where id = r.user_id) as firstName, r.request_title as requestTitle, (select count(*) from bid where request_id = r.id) as submittedBids, (select count(*) from bid where request_id = r.id and status_id in(select id from status where name_en in('Canceled', 'Rejected'))) as rejectedBids, (select b.id from bid b where b.request_id = r.id and b.status_id in(select id from status where name_en in('In Progress','Approved', 'Completed')) limit 1) as selectedBid from request r where r.status_id in (select id from status where name_en in ('Completed', 'Canceled')) and r.user_id = :userId order by jobId, id desc", nativeQuery = true)
+    List<RequestVO> findHistoryByUserId(Long userId, Pageable pageable);
+
+    @Query(value = "select count(*) from request r where r.user_id =?1", nativeQuery = true)
+    long countByUser(Long userId);
+
+    @Query(value = "select count(*) from request r where r.user_id = ?1 and status_id = (select id from status where name_en = 'Completed')", nativeQuery = true)
+    long countCompletedDealsByUser(Long userId);
+
+    @Query(value = "select count(*) from request r where r.user_id = :userId and status_id = (select id from status where name_en = 'Canceled') or id in(select request_id from supplier_requests_notinterested)" ,nativeQuery = true)
+    int countRejectedByUser(Long userId);
+
+//    Old one before add part types, work properly
+//    @Query(value = "select distinct r.id as id, r.status_id as status, r.submission_date as submissionDate, r.user_id as userId, r.privacy as privacy, (select first_name from users where id = r.user_id) as firstName, r.request_title as requestTitle, (select count(*) from bid where request_id = r.id) as submittedBids, (select count(*) from bid where request_id = r.id and status_id in(select id from status where name_en in('Canceled', 'Rejected'))) as rejectedBids from request r where r.car_id in(select car.id from car,supplier_brands where car.brand_id = supplier_brands.brand_id) and r.id in(select request_part_types.request_id from request_part_types where request_part_types.part_type_id in(select supplier_part_types.part_type_id from supplier_part_types where supplier_id = :supplierId)) and r.status_id not in (select id from status where name_en in ('Canceled', 'Completed')) and r.id not in(select supplier_requests_notinterested.request_id from supplier_requests_notinterested where supplier_id = :supplierId)  order by id desc", nativeQuery = true)
+
+//    @Query(value = "select distinct r.id as id, r.status_id as status, r.submission_date as submissionDate, r.user_id as userId, r.privacy as privacy, (select first_name from users where id = r.user_id) as firstName, r.request_title as requestTitle, (select count(*) from bid where request_id = r.id) as submittedBids, (select count(*) from bid where request_id = r.id and status_id in(select id from status where name_en in('Canceled', 'Rejected'))) as rejectedBids from request_suppliers, request r where r.car_id in(select car.id from car,supplier_brands where car.brand_id = supplier_brands.brand_id) and r.id in(select request_part_types.request_id from request_part_types where request_part_types.part_type_id in(select supplier_part_types.part_type_id from supplier_part_types where supplier_id = :supplierId)) and r.status_id not in (select id from status where name_en in ('Canceled', 'Completed')) and r.id not in(select supplier_requests_notinterested.request_id from supplier_requests_notinterested where supplier_id = :supplierId) and 1 = (case when r.privacy='Public' then 1 when r.privacy = 'Private' and r.id in (select rs.request_id from request_suppliers rs where rs.supplier_id = :supplierId) then 1 end) order by id desc", nativeQuery = true)
+
+    @Query(value = "select * from (select distinct r.id as id, r.qty as qty, r.job_id as jobId, (select id from claim where id = r.job_id) as claimId, r.status_id as status, r.submission_date as submissionDate, r.user_id as userId, r.privacy as privacy, (select first_name from users where id = r.user_id) as firstName, r.request_title as requestTitle, (select count(*) from bid where request_id = r.id) as submittedBids, (select count(*) from bid where request_id = r.id and status_id in(select id from status where name_en in('Canceled', 'Rejected'))) as rejectedBids from request r where r.car_id in(select car.id from car where car.brand_id in(select supplier_brands.brand_id from supplier_brands where supplier_id = :supplierId)) and r.status_id not in (select id from status where name_en in ('Canceled', 'Completed')) and r.id not in(select supplier_requests_notinterested.request_id from supplier_requests_notinterested where supplier_id = :supplierId) and 1 = (case when r.privacy='Public' then 1 when r.privacy = 'Private' and r.id in (select rs.request_id from request_suppliers rs where rs.supplier_id = :supplierId) then 1 end) and r.id in (select rr.id from request rr where rr.id not in(select rpt.request_id from request_part_types rpt) union (select rr.id from request rr where rr.id in(select rpt.request_id from request_part_types rpt where rpt.part_type_id in(select supplier_part_types.part_type_id from supplier_part_types where supplier_id = :supplierId))))) as custom_query order by jobId, id desc", nativeQuery = true)
+    List<RequestVO> findInterestedRequestsForSupplier(Long supplierId, Pageable pageable);
+
+    @Query(value = "SELECT ns.supplier_id as supplierId, s.name as supplierName FROM `supplier_requests_notinterested` ns, supplier s WHERE ns.request_id = :requestId and ns.supplier_id = s.id", nativeQuery = true)
+    List<SupplierVO> findNotInterestedSuppliersInRequest(Long requestId, Pageable pageable);
+
+    @Query(value = "select supplier_id from request_suppliers where request_id = :requestId", nativeQuery = true)
+    List<Long> findRequestSuppliers(Long requestId);
+
+    @Query(value = "select r.id as id, r.qty as qty, r.job_id as jobId, (select id from claim where id = r.job_id) as claimId, r.status_id as status, r.submission_date as submissionDate, r.user_id as userId, r.privacy as privacy, (select first_name from users where id = r.user_id) as firstName, r.request_title as requestTitle, (select count(*) from bid where request_id = r.id) as submittedBids, (select count(*) from bid where request_id = r.id and status_id in(select id from status where name_en in('Canceled', 'Rejected'))) as rejectedBids, (select b.id from bid b where b.request_id = r.id and b.status_id in(select id from status where name_en in('In Progress','Approved')) limit 1) as selectedBid from request r where r.status_id not in (select id from status where name_en in ('Completed', 'Canceled')) order by jobId, id desc", nativeQuery = true)
+    List<RequestVO> findAllRequests(Pageable pageable);
+
+    @Query(value = "select r.id as id, r.qty as qty, r.job_id as jobId, (select job_no from job where id = r.job_id) as jobNo, (select id from claim where id = r.job_id) as claimId, (select claim_no from claim where id = r.job_id) as claimNo, r.status_id as status, r.submission_date as submissionDate, r.user_id as userId, r.privacy as privacy, (select first_name from users where id = r.user_id) as firstName, r.request_title as requestTitle, (select count(*) from bid where request_id = r.id) as submittedBids, (select count(*) from bid where request_id = r.id and status_id in(select id from status where name_en in('Canceled', 'Rejected'))) as rejectedBids, (select b.id from bid b where b.request_id = r.id and b.status_id in(select id from status where name_en in('In Progress','Approved')) limit 1) as selectedBid from request r where r.status_id not in (select id from status where name_en in ('Completed', 'Canceled')) and job_id in(select id from job where claim_id = :claimId) order by jobId, id desc", nativeQuery = true)
+    List<RequestVO> findAllClaimRequests(Pageable page, Long claimId);
+
+//    @Query(value = "select r.id as id, r.job_id as jobId, (select job_no from job where id = :jobId) as jobNo, (select id from claim where id = r.job_id) as claimId, (select claimNo from claim where id = r.job_id) as claimNo, r.status_id as status, r.submission_date as submissionDate, r.user_id as userId, r.privacy as privacy, (select first_name from users where id = r.user_id) as firstName, r.request_title as requestTitle, (select count(*) from bid where request_id = r.id) as submittedBids, (select count(*) from bid where request_id = r.id and status_id in(select id from status where name_en in('Canceled', 'Rejected'))) as rejectedBids, (select b.id from bid b where b.request_id = r.id and b.status_id in(select id from status where name_en in('In Progress','Approved')) limit 1) as selectedBid from request r where r.status_id not in (select id from status where name_en in ('Completed', 'Canceled')) and job_id = :jobId order by id desc", nativeQuery = true)
+    @Query(value = "select * from request where job_id = :jobId order by id", nativeQuery = true)
+    List<Request> findAllJobRequests(Pageable page, Long jobId);
+
+
+    //working query for findInterestedRequestsForSupplier with Brand and Part Types
+//    select distinct r.id as id, r.status_id as status, r.submission_date as submissionDate, r.user_id as userId, r.privacy as privacy, (select first_name from users where id = r.user_id) as firstName, r.request_title as requestTitle, (select count(*) from bid where request_id = r.id) as submittedBids, (select count(*) from bid where request_id = r.id and status_id in(select id from status where name_en in('Canceled', 'Rejected'))) as rejectedBids from request_suppliers, request r where r.car_id in(select car.id from car,supplier_brands where car.brand_id = supplier_brands.brand_id) and r.id in(select request_part_types.request_id from request_part_types where request_part_types.part_type_id in(select supplier_part_types.part_type_id from supplier_part_types where supplier_id = :supplierId)) and r.status_id not in (select id from status where name_en in ('Canceled', 'Completed')) and r.id not in(select supplier_requests_notinterested.request_id from supplier_requests_notinterested where supplier_id = :supplierId) and 1 = (case when r.privacy='Public' then 1 when r.privacy = 'Private' and r.id in (select rs.request_id from request_suppliers rs where rs.supplier_id = :supplierId) then 1 end) order by id desc
+}
