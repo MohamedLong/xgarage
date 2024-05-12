@@ -30,6 +30,8 @@ pipeline {
                   
                   sh 'docker push longali/gatewayservice'
 
+                  sh "docker images"
+
                 }
                 }
             }
