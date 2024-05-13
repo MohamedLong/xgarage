@@ -30,10 +30,6 @@ pipeline {
                   
                   sh 'docker push longali/coreservice'
 
-                  sh "docker images"
-                  sh "docker ps"
-                  sh "docker ps -a"
-
                 }
                 }
             }
