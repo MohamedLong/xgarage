@@ -5,7 +5,9 @@ pipeline {
  tools {
     maven '3.9.3'
   }
-
+options {
+        buildDiscarder(logRotator(numToKeepStr: '1')) // Keeps the last 1 builds
+    }
     stages {
         stage('Build Maven') {
            steps {
