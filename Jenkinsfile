@@ -11,7 +11,6 @@ pipeline {
     }
 
     stages {
-
         stage('Checkout and Build Angular') {
             steps {
                 checkout scmGit(branches: [[name: '*/angular']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/MohamedLong/xgarage.git']])
@@ -20,6 +19,7 @@ pipeline {
                 sh "npm run build"
             }
         }
+
         stage('Build Docker Image') {
             steps {
                 script {
