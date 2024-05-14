@@ -33,11 +33,11 @@ pipeline {
                 }
             }
         }
-        stage('Deploy to Kubernetes') {
-            steps {
-                // Add your Kubernetes deployment script here
-            }
-        }
+        // stage('Deploy to Kubernetes') {
+        //     steps {
+        //         // Add your Kubernetes deployment script here
+        //     }
+        // }
     }
 }
 
