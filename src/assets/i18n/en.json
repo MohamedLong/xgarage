@@ -1,0 +1,915 @@
+{
+    "auth": {
+        "form": {
+            "name": "Phone/Email",
+            "firstname": "First Name",
+            "lastname": "Last Name",
+            "phone": "Phone",
+            "password": "Password",
+            "newPass": "New Password",
+            "email": "Email",
+            "tenant": "Tenant",
+            "tenantType": "Tenant Type",
+            "login": "Login",
+            "signup": "Sign up",
+            "newTenant": "Create New Tenant",
+            "selectTenant": "Select Existing Tenant"
+        },
+        "login": {
+            "header": "Welcome",
+            "footer_text": "Dont't have an account?",
+            "header_text": "Please use the form to sign-in Xgarage"
+        },
+        "signup": {
+            "header": "Create Account",
+            "footer_text": "Already have an account?",
+            "header_text": "Sign up with your email to get started!"
+        },
+        "resetpass": {
+            "header": "Reset Your Password",
+            "header_text": "Please enter your current and new password",
+            "reset": "Reset"
+        }
+    },
+    "TOPBAR": {
+        "TITLE": "X Garage Dashboard",
+        "SELECT": "Change language",
+        "MENU": {
+            "CHANGEPASSWORD": "Change Password",
+            "LOGOUT": "Logout"
+        }
+    },
+    "operations": {
+        "title": "Operations",
+        "new": "New",
+        "close": "Close",
+        "reject": "Reject",
+        "approve": "Approve",
+        "run": "Run",
+        "confirmAction": "Confirm Action",
+        "confirmCloneAction": "Confirm Clone Action",
+        "delete": "Delete",
+        "cancel": "Cancel",
+        "actions": "Actions",
+        "action": "Action",
+        "save": "Save",
+        "print": "Print",
+        "saveAll": "Save All",
+        "add": "Add",
+        "filter": "Search...",
+        "export": "Export",
+        "import": "Import",
+        "deleteMessage": "Are you sure you want to delete",
+        "cancelMessage": "Are you sure you want to cancel",
+        "deleteAllMessage": "Are you sure you want to delete selected entries?",
+        "confirmActionMessage": "Are you sure you want to do this action?",
+        "confirmCloneActionMessage": "Are you sure you want to do this action?",
+        "deleteConfirm": "Confirm",
+        "addPayment": "Add Payment",
+        "operations": "Operations",
+        "update": "Update",
+        "view": "View",
+        "addnew": "Add New",
+        "tableFilter": {
+            "clear": "Clear",
+            "apply": "Apply..."
+        }
+    },
+    "common": {
+        "id": "ID",
+        "profile": "Profile",
+        "x": "X-Garage",
+        "description": "Description",
+        "contactNo": "Contact No",
+        "customer": "Customer Name",
+        "customerRequired": "Customer name is required.",
+        "contactNoRequired": "Contact No is Required.",
+        "customerSearch": "Search by customer name",
+        "supplier": "Supplier Name",
+        "supplierRequired": "Supplier name is required",
+        "supplierSearch": "Search by supplier name",
+        "select": "Select",
+        "fixed": "Fixed",
+        "vatValue": " VAT Value",
+        "notes": "Notes",
+        "terms": "Terms and Conditions:  ",
+        "currency": "Currency",
+        "country": "Country",
+        "currencySearch": "Search by currency",
+        "currencyRequired": "Currency is required.",
+        "cuRate": "Currency Rate",
+        "cuRateRequired": "Currency rate is required.",
+        "cuRatePositiveConstraint": "Cu Rate should be > 0..",
+        "amount": "Amount",
+        "discountDialog": "Discount Details",
+        "vatDialog": " VAT Details",
+        "amountSeacrh": "Search by amount",
+        "amountRequired": "Amount is required.",
+        "qty": "Qty",
+        "qtyRequired": "Quantity is required.",
+        "qtyPositiveConstraint": "Quantity should be >= 0.",
+        "qtySearch": "Search by Quantity",
+        "item": "Item Name",
+        "itemRequired": "Item is required.",
+        "itemSearch": "Search by item",
+        "metric": "Metric",
+        "metricRequired": "Metric is required.",
+        "metricSearch": "Search by metric",
+        "discount": "Discount",
+        "discountRequired": "Discount is required.",
+        "discountSearch": "Search by discount",
+        "discountType": "Discount Type",
+        "discountTypeRequired": "Discount type is required.",
+        "discountTypeSearch": "Search by discount type",
+        "debit": "Debit",
+        "stock": "Warehouse",
+        "stockRequired": "Warehouse is required.",
+        "stockSearch": "Search by warehouse",
+        "processId": "Process ID",
+        "processIdRequired": "Process id is required.",
+        "processIdSearch": "Search by process id",
+        "debitRequired": "Debit is required.",
+        "debitSearch": "Search by depit",
+        "credit": "Credit",
+        "creditRequired": "Credit is required.",
+        "creditSearch": "Search by credit",
+        "voucher": "Voucher",
+        "voucherType": "Voucher Type",
+        "payType": "Payment Type",
+        "payTypeRequired": "Payment type is required.",
+        "payTypeSearch": "Search by Payment Type",
+        "payMethod": "Payment Method",
+        "payMethodRequired": "Payment method is required.",
+        "payMethodSearch": "Search by payment method",
+        "famount": "Famount",
+        "famountSearch": "Search by famount",
+        "total": "Total",
+        "totalRequired": "Total is required.",
+        "totalSearch": "Search by total",
+        "unitPrice": "Unit Price",
+        "unitPriceRequired": "Unit price is required.",
+        "unitPricePositiveConstraint": "Unit price should be > 0.",
+        "unitPriceSearch": "Search by unit price",
+        "famountRequired": "Famount is required.",
+        "insertUser": "Insert User",
+        "insertUserSearch": "Search by insert user",
+        "status": "Status",
+        "statusSearch": "Search by status",
+        "insertDate": "Insert Date",
+        "insertDateSearch": "Search by insert date",
+        "tax": "TAX",
+        "taxRequired": "Tax is Required",
+        "vat": "VAT",
+        "subTotal": "Sub Total",
+        "grandTotal": "Grand Total",
+        "vatRequired": "Vat is Required",
+        "invoice": "invoice",
+        "netAmount": "Net Amount",
+        "payedStatus": "Payment Status",
+        "deliveryStatus": "Delivery Status",
+        "costCenter": "Cost Center",
+        "department": "Department",
+        "saleCost": "Sales Account",
+        "actions": "Actions",
+        "parts": "Parts",
+        "for": "For",
+        "formRequired": "Please fill out required fields",
+        "changePassword": "Change Password",
+        "logout": "Logout"
+    },
+    "currency": {
+        "title": "Manage Currencies",
+        "export": "Export",
+        "tableColumn": {
+            "id": "ID",
+            "currencyCode": "Currency Code",
+            "currencyCodeSearch": "Search by currency code",
+            "currencyName": "Currency Name",
+            "currencyNameSearch": "Search by currency name",
+            "currencyRate": "Currency Rate"
+        },
+        "currencyDialog": {
+            "title": "Metric Details",
+            "currencyCodeRequired": "Currency Code is required.",
+            "currencyNameRequired": "Currency Name is required.",
+            "currencyRateRequired": "Currency Rate is Required."
+        }
+    },
+    "paymentMethod": {
+        "title": "Manage Payment Methods",
+        "export": "Export",
+        "tableColumn": {
+            "id": "ID",
+            "name": "Method Name",
+            "nameSearch": "Search by method name"
+        },
+        "paymentMethodDialog": {
+            "title": "Payment Method Details",
+            "nameRequired": "Method Name is required."
+        }
+    },
+    "paymentType": {
+        "title": "Manage Payment Types",
+        "export": "Export",
+        "tableColumn": {
+            "id": "ID",
+            "name": "Type Name",
+            "nameSearch": "Search by type name"
+        },
+        "paymentTypeDialog": {
+            "title": "Payment Types Details",
+            "nameRequired": "Type Name is required."
+        }
+    },
+    "status": {
+        "title": "Manage Status",
+        "export": "Export",
+        "tableColumn": {
+            "id": "ID",
+            "nameEn": "Status English Name",
+            "nameAr": "Status Arabic Name"
+        },
+        "statusDialog": {
+            "title": "Status Details",
+            "nameEnRequired": "Status English Name is required.",
+            "nameArRequired": "Status Arabic Name is required."
+        }
+    },
+    "metric": {
+        "title": "Manage Metrics",
+        "export": "Export",
+        "tableColumn": {
+            "id": "ID",
+            "metricCode": "Metric Code",
+            "metricCodeSearch": "Search by metric code",
+            "metricName": "Metric Name",
+            "metricNameSearch": "Search by metric name"
+        },
+        "metricDialog": {
+            "title": "Metric Details",
+            "metricCodeRequired": "Metric Code is required.",
+            "metricNameRequired": "Metric Name is required."
+        }
+    },
+    "tenant": {
+        "title": "Manage Tenants",
+        "table_footer": "In total there are {{length}} Tenants",
+        "tableColumn": {
+            "id": "ID",
+            "name": "Tenant Name",
+            "nameSearch": "Search by tenant name",
+            "cr": "Tenant CR",
+            "email": "Tenant Email",
+            "crSearch": "Search by tenant cr",
+            "location": "Location",
+            "tenantType": "Tenant Type",
+            "profile": "Profile",
+            "enabled": "Enabled"
+        },
+        "tenantDialog": {
+            "title": "Tenant Details",
+            "nameRequired": "Tenant name is required.",
+            "crRequired": "Tenant CR is required.",
+            "emailRequired": "Tenant Email is required.",
+            "locationRequired": "Location is required.",
+            "tenanTypeRequired": "Tenant Type is required."
+        }
+    },
+    "tenantType": {
+        "title": "Manage Tenant Types",
+        "table_footer": "In total there are {{length}} Tenant Types",
+        "tableColumn": {
+            "id": "ID",
+            "name": "Type Name",
+            "nameSearch": "Search by type name"
+        },
+        "tenantTypeDialog": {
+            "title": "Tenant Type Details",
+            "nameRequired": "Type name is required."
+        }
+    },
+    "claim": {
+        "title": "Manage Claims",
+        "table_footer": "In total there are {{length}} Claims",
+        "tableColumn": {
+            "id": "ID",
+            "claimDate": "Claim Date",
+            "nameSearch": "Search by claim name",
+            "createdUser": "Creator User",
+            "tenantId": "Tenant",
+            "tenantName": "Tenant Name",
+            "statusDate": "Status Date",
+            "claimNo": "Claim No",
+            "status": "Status",
+            "claimNotFound": "this claim has no requests",
+            "claimBidsNotFound": "this claim has no bids yet",
+            "requestFor": "Request For"
+        },
+        "claimDialog": {
+            "title": "Claim Details",
+            "claimDateRequired": "Claim date is required.",
+            "tenantRequired": "Tenant is required.",
+            "claimNoRequired": "Claim Number is required."
+        },
+        "form": {
+            "datetime": "Received Date & Time",
+            "delivryDate": "Exc. Delivery Date",
+            "breakdown": "Breakdown",
+            "km": "K.M",
+            "whatYouRecived": "What You Received",
+            "calimDateRequired": "Calim Date is Required",
+            "delivryDateRequired": "Exc. Delivery Date is Required",
+            "breakdownRequired": "Breakdown is Required",
+            "kmRequired": "K.M is Required",
+            "excess": "Excess R.O",
+            "excessRequired": "Excess R.O is Required",
+            "inspectionBy": "Inspection By",
+            "inspectionByRequired": "Inspection By is required",
+            "surveyedBy": "Surveyed By",
+            "surveyedByRequired": "Surveyed By is required",
+            "repairCost": "Repair Cost",
+            "repairCostRequired": "Repair Cost is required",
+            "repairHrs": "Repair Hrs.",
+            "repairHrsRequired" : "Repair Hrs is required",
+            "Office Location": "Office Location",
+            "officeLocationRequired": "Office Location is required",
+            "deletePartMsg": "Are you sure you want to delete this part?",
+            "claimDetails": "Claim Details",
+            "privacyLabel": "Private Garages"
+        }
+    },
+    "supplier": {
+        "title": "Suppliers",
+        "table_footer": "In total there are {{length}} Suppliers",
+        "supplierDialog": {
+            "title": "Supplier Details",
+            "nameRequired": "supplier name is required.",
+            "poneRequired": "supplier phone is required.",
+            "crRequired": "supplier CR is required.",
+            "locationRequired": "Location is required.",
+            "partRequired": "please select at least one part type",
+            "serviceRequired": "please select at least one service type",
+            "brandRequired": "please select at least one car brand",
+            "name": "Supplier name",
+            "cr": "Cr number",
+            "phone": "Phone number",
+            "part": "Part types",
+            "service": "Service types",
+            "brand": "Brand"
+        }
+    },
+    "supplierProfile": {
+        "title": "Profile",
+        "information": "Profile Information",
+        "nameRequired": "Name is required.",
+        "phoneRequired": "Phone is required.",
+        "emailRequired": "Email is required.",
+        "crRequired": "CR is required.",
+        "locationRequired": "Location is required.",
+        "partRequired": "Please select at least one part type",
+        "serviceRequired": "Please select at least one service type",
+        "brandRequired": "Please select at least one car brand",
+        "specialityRequired": "Please select at least one car brand",
+        "id": "Tenant ID",
+        "name": "Tenant name",
+        "bids": "Number Of Bids",
+        "cr": "Cr number",
+        "phone": "Phone number",
+        "email": "Email",
+        "parts": "Part types",
+        "services": "Service types",
+        "brands": "Brands",
+        "speciality": "About Speciality"
+    },
+    "itemType": {
+        "title": "Manage Item Types",
+        "export": "Export",
+        "tableColumn": {
+            "id": "ID",
+            "typeName": "Item Type Name",
+            "itemTypeNameSearch": "Search by item type name",
+            "itemTypeOperation": ""
+        },
+        "itemTypeDialog": {
+            "title": "Item Type Details",
+            "itemTypeNameRequired": "Item Type Name is required."
+        }
+    },
+    "part": {
+        "title": "Manage Parts",
+        "table_footer": "In total there are {{length}} Parts",
+        "export": "Export",
+        "dividerTitle": " Or Select Manually",
+        "addPart": "Add Part",
+        "tableColumn": {
+            "id": "ID",
+            "partName": "Part Name",
+            "partNameSearch": "Search by part name",
+            "partCategory": "Category",
+            "partCategorySearch": "Search by part category",
+            "partSubCategory": "Sub-Category",
+            "partSubCategorySearch": "Search by part sub category",
+            "status": "Status",
+            "enabled": "Enabled"
+        },
+        "partDialog": {
+            "title": "Part Details",
+            "partNamePlaceHolder": "Select Part Name",
+            "partNameRequired": "Part Name is required.",
+            "categoryPlaceHolder": "Select Part Category",
+            "partCategoryRequired": "Part category is required.",
+            "subCategoryPlaceHolder": "Select Sub Category",
+            "partSubCategoryRequired": "Part sub category is required.",
+            "searchTitle": "Search for Parts.",
+            "setnew": "Set as a new part",
+            "errMsg": "{{msg}}"
+        }
+    },
+    "role": {
+        "title": "Manage Roles",
+        "export": "Export",
+        "dividerTitle": " Or Select Manually",
+        "tableColumn": {
+            "roleName": "Role Name",
+            "roleNameSearch": "Search by role name",
+            "roleDescription": "Role Description"
+        },
+        "Dialog": {
+            "title": "Role Details",
+            "roleNamePlaceHolder": "Write Role Name",
+            "roleNameRequired": "Role Name is required.",
+            "roleDescriptionPlaceHolder": "Write Role Description"
+        }
+    },
+    "USER": {
+        "TITLE": "Users",
+        "TITLE_2": "Manage Users",
+        "NEW": "New",
+        "EXPORT": "Export",
+        "TABLEFILTER": {
+            "CLEAR": "Clear",
+            "SEARCH": "Search Keyword"
+        },
+        "TABLECOLUMN": {
+            "ID": "ID",
+            "USERID": "User ID",
+            "USERIDFILTER": "Search by user id",
+            "FIRSTNAME": "First Name",
+            "FIRSTNAMEFILTER": "Search by first name",
+            "LASTNAME": "Last Name",
+            "LASTNAMEFILTER": "Search by last name",
+            "EMAIL": "Email",
+            "EMAILFILTER": "Search by email",
+            "PHONE": "Phone",
+            "PHONEFILTER": "Search by phone",
+            "CREATEDDATE": "Create Date",
+            "ENABLED": "Enabled",
+            "ENABLEDFILTER": "Search by enabled",
+            "EMPTYMESSAGE": "No users found.",
+            "LOADING": "Loading users data. Please wait."
+        },
+        "DIALOG": {
+            "TITLE": "User Details",
+            "FIRSTNAME": "First Name",
+            "FIRSTNAMEREQUIRED": "First Name is Required",
+            "LASTNAME": "Last Name",
+            "LASTNAMEREQUIRED": "Last Name is Required",
+            "PHONE": "Phone",
+            "PHONEREQUIRED": "Phone is Required",
+            "EMAIL": "Email",
+            "EMAILREQUIRED": "Email is Required",
+            "USERID": "User ID",
+            "USERIDREQUIRED": "User ID is Required",
+            "PASSWORD": "Password",
+            "PASSWORDREQUIRED": "Password is Required",
+            "ROLESELECTOR": "select a role",
+            "TenantSELECTOR": "Select a Tenant",
+            "CANCEL": "Cancel",
+            "SAVE": "Save",
+            "DELETEPROMPT": "Are you sure you want to delete ",
+            "PROMPTNOOPTION": "No",
+            "PROMPTYESOPTION": "Yes"
+        }
+    },
+    "UserRoles": {
+        "title": "User Roles",
+        "UserId": "User Id",
+        "RoleId": "Role Id",
+        "notFound": "No user roles found",
+        "loading": "Loading user roles data. Please wait.",
+        "deleteRole": "Are you sure you want to delete selected user role?"
+    },
+    "USERMAINMENU": {
+        "TITLE": "Module Permission",
+        "NEW": "New",
+        "EXPORT": "Export",
+        "TABLEFILTER": {
+            "CLEAR": "Clear",
+            "SEARCH": "Search Keyword"
+        },
+        "TABLECOLUMN": {
+            "ID": "ID",
+            "ROLE": "Role",
+            "PAGE": "Module",
+            "PAGEFILTER": "Search by module name",
+            "EMPTYMESSAGE": "No user modules found.",
+            "LOADING": "Loading user modules data. Please wait."
+        },
+        "DIALOG": {
+            "TITLE": "User Modules Details",
+            "ROLE": "Role",
+            "ROLESELECTOR": "select a role",
+            "ROLEREQUIRED": "Role is Required",
+            "rootModule": "Root Module",
+            "rootModuleSelector": "select a root module",
+            "rootModuleRequired": "Root Module is Required.",
+            "MODULE": "Module",
+            "MODULESELECTOR": "select a module",
+            "MODULEREQUIRED": "Module is Required",
+            "CANCEL": "Cancel",
+            "SAVE": "Save",
+            "DELETEPROMPT": "Are you sure you want to delete ",
+            "MENUDELETEPROMPT": "Are you sure you want to delete selected modules?",
+            "PROMPTNOOPTION": "No",
+            "PROMPTYESOPTION": "Yes"
+        }
+    },
+    "USERSUBMENU": {
+        "TITLE": "User Page Permission",
+        "NEW": "New",
+        "EXPORT": "Export",
+        "TABLEFILTER": {
+            "CLEAR": "Clear",
+            "SEARCH": "Search Keyword"
+        },
+        "TABLECOLUMN": {
+            "ID": "ID",
+            "ROLE": "Role",
+            "PAGE": "Page",
+            "PAGEFILTER": "Search by page name",
+            "EMPTYMESSAGE": "No user pages found.",
+            "LOADING": "Loading user pages data. Please wait."
+        },
+        "DIALOG": {
+            "TITLE": "User Page Details",
+            "ROLE": "Role",
+            "ROLESELECTOR": "select a role",
+            "ROLEREQUIRED": "Role is Required",
+            "MODULE": "Module",
+            "MODULEREQUIRED": "Module is Required",
+            "MODULESELECTOR": "select a module",
+            "PAGE": "Page",
+            "PAGESELECTOR": "select a page",
+            "PAGEREQUIRED": "Page is Required",
+            "NEWAUTH": "New",
+            "DELETEAUTH": "Delete",
+            "EDITAUTH": "Edit",
+            "PRINTAUTH": "Print",
+            "ACCEPTAUTH": "Accept",
+            "APPROVEAUTH": "Approve",
+            "CANCELAUTH": "Cancel",
+            "COMPAUTH": "Complete",
+            "CONFIRMAUTH": "Confirm",
+            "CONFIRMCANCELAUTH": "Confirm Cancel",
+            "CANCEL": "Cancel",
+            "SAVE": "Save",
+            "DELETEPROMPT": "Are you sure you want to delete ",
+            "DELETESELECTEDPROMPT": "Are you sure you want to delete selected pages?",
+            "PROMPTNOOPTION": "No",
+            "PROMPTYESOPTION": "Yes",
+            "PERMISSIONSELECTOR": "select at least one permission."
+        }
+    },
+    "CHANGEPASSWORD": {
+        "TITLE": "Change Password",
+        "FIELD": {
+            "OLDPASSWORD": "Old Password",
+            "NEWPASSWORD": "New Password",
+            "CONFIRMPASSWORD": "Confirm Password",
+            "MISMATCH": "new password and confirm password don't match",
+            "SAVE": "Save"
+        }
+    },
+    "LOGIN": {
+        "TITLE": "Welcome To Benasmaak Dashboard",
+        "TITLE2": "Sign in to continue",
+        "FIELD": {
+            "USERNAME": "Username",
+            "USERNAMEHOLDER": "Username",
+            "PASSWORD": "Password",
+            "SIGNIN": "Sign In"
+        }
+    },
+    "job": {
+        "title": "Requests",
+        "table_footer": "In total there are {{length}} Requests",
+        "jobNumber": "Job#",
+        "noBids": "No Bids Found.",
+        "operations": {
+            "approveBid": "Approve Bids",
+            "approveMultipleBids": "Please confirm that the selected Bids will be approved, LPO will be generated and sent via emails to the selected suppliers? ",
+            "rejectBid": "Reject Bids",
+            "approveBids": "Please confirm that the Bids will be approved, LPO will be generated and sent via emails to the selected {{type}}?",
+            "rejectMultipleBids": "Please confirm that the selected Bids will be rejected and notifications of rejection will be sent to the selected suppliers?",
+            "rejectBids": "Please confirm that the Bids will be rejected and notifications of rejection will be sent to the selected {{type}}?"
+        },
+        "form": {
+            "insuranceFrom": "Insurance From",
+            "claimNo": "Claim Number",
+            "claimNoPlaceholder": "Search For Claim Number",
+            "jobCardNo": "Job Card Number",
+            "jobNoRequired": "Job Number is required.",
+            "addMoreDetails": "Add More Details",
+            "garageLocation": "Garage Location",
+            "bidDate": "Bid Closing Date",
+            "privateSuppliers": "Private {{type}}",
+            "privacy": "Privacy",
+            "createRequest": "Request Information",
+            "enterJob": "Enter Job Card Number",
+            "selectPrivateSuppliers": "Select Private Suppliers",
+            "enterclaimNo": "Enter Calim Number",
+            "ot/dp": "OD/TP",
+            "newReq": "Add New Request",
+            "status": "Job Status",
+            "selectInsurance": "Select Insurance From"
+        },
+
+        "tableColumn": {
+            "id": "ID",
+            "jobNo": "Job Number",
+            "claimNo": "Claim Number",
+            "claimId": "Claim ID",
+            "client": "Client",
+            "parts": "Parts",
+            "status": "Status",
+            "insuranceType": "Insurance Type",
+            "carChassisNumber": "Chassis Number",
+            "carPlateNumber": "Plate Number",
+            "jobTitle": "Vechile Info",
+            "partNames": "Parts",
+            "submittedBids": "Last Update",
+            "jobStatus": "Status",
+            "receivedBids": "Bids By {{type}}",
+            "addBids": "Add Bids"
+        },
+        "jobDialog": {
+            "newJob": "Add Job",
+            "title": "Job Details"
+        }
+    },
+    "request": {
+        "title": "Request Information",
+        "table_footer": "In total there are {{length}} Requests",
+        "tableColumn": {
+            "id": "Request #",
+            "requestTitle": "Request Title",
+            "newRequest": "Create New Spare Part Request Now",
+            "homePage": "Looking for a Spare Part?",
+            "description": "Description",
+            "location": "Request Location",
+            "bidDate": "Bid Closing Date",
+            "interestedSuppliers": "Interested Suppliers",
+            "privacy": "Privacy",
+            "documents": "Documents",
+            "partName": "Part Name",
+            "claimNo": "Claim No",
+            "jobNo": "Job No",
+            "createdUser": "Created User",
+            "submittedBids": "No of Submitted Bids",
+            "submissionDate": "Request Date",
+            "partTypes": "Part Types",
+            "status": "Status"
+        },
+        "form": {
+            "prefredTypes": "Preferred Parts Type",
+            "prefredTypesrequired": "please select part type",
+            "desc": "Description",
+            "descPlaceholder": "Add a short description about your parts",
+            "sendReq": "{{text}}",
+            "qtyRequired": "Quantity can't be less than 1",
+            "uploadImages": "Upload Part Images",
+            "searchRequest": "Search request with brand name or parts name",
+            "qty": "Quantity"
+        },
+        "requestDialog": {
+            "newRequest": "Add Request",
+            "title": "Request Details"
+        }
+    },
+    "car": {
+        "title": "Car Information",
+        "table_footer": "In total there are {{length}} Cars",
+        "form": {
+            "minChassieErorr": "Min Chassis Number is 13.",
+            "title": "Car Details",
+            "chassisNo": "Chassis Number",
+            "licencePlate": "Licence Plate",
+            "emptybrand": "Please Enter Chassis Number First",
+            "model": "Model",
+            "emptymodel": "Please Select Car Brand First",
+            "year": "Year",
+            "selectyear": "Select a Year",
+            "spec": "Specification",
+            "selectspec": "Select a Specification",
+            "gearbox": "Gear Box",
+            "plateRequired": "Plate Number is Required.",
+            "uploadCarImg": "Upload Car Image",
+            "addCar": "Add Car",
+            "brand": "Brand",
+            "type": "Type",
+            "gear": "Gear",
+            "brandRequired": "Brand is required.",
+            "chassisNoRequired": "Chassis Number is Required.",
+            "modelRequired": "Model is required.",
+            "yearRequired": "Year is required.",
+            "typeRequired": "Type is required.",
+            "gearRequired": "Gear Type is required.",
+            "gearTypeRequired": "Gear Type is required.",
+            "chassisRequired": "Chassis Number is required.",
+            "lettersNotAllowed": "Only letters and numbers are allowed",
+            "onlyLetters": "Only letters and numbers are allowed.",
+            "chassisNoNotFound": "Car Chassis Number Not Found, Please Fill out the Form to Create a New One.",
+            "specRequired": "Car Specification is Required."
+        }
+    },
+    "category": {
+        "title": "Manage Categories",
+        "table_footer": "In total there are {{length}} Catogories",
+        "tableColumn": {
+            "id": "ID",
+            "name": "Category Name",
+            "nameSearch": "Search by category name"
+        },
+        "categoryDialog": {
+            "title": "Category Details",
+            "nameRequired": "Category name is required."
+        }
+    },
+    "brand": {
+        "title": "Manage Brands",
+        "table_footer": "In total there are {{length}} Brands",
+        "tableColumn": {
+            "id": "ID",
+            "brandName": "Brand Name",
+            "nameSearch": "Search by brand name"
+        },
+        "brandDialog": {
+            "title": "Brand Details",
+            "brandNameRequired": "Brand name is required."
+        }
+    },
+    "subcategory": {
+        "title": "Manage Sub-Categories",
+        "table_footer": "In total there are {{length}} Sub-Categories",
+        "tableColumn": {
+            "id": "ID",
+            "name": "Sub-Category Name",
+            "nameSearch": "Search by sub-category name"
+        },
+        "subcategoryDialog": {
+            "title": "Sub-Category Details",
+            "nameRequired": "Sub-Category name is required."
+        }
+    },
+    "carModel": {
+        "title": "Manage Car Models",
+        "table_footer": "In total there are {{length}} Car Models",
+        "tableColumn": {
+            "id": "ID",
+            "name": "Car Model Name",
+            "nameSearch": "Search by car model name"
+        },
+        "carModelDialog": {
+            "title": "Car Model Details",
+            "nameRequired": "Car Model name is required."
+        }
+    },
+    "bid": {
+        "title": "Bids",
+        "compareBids": "Compare Bids",
+        "table_footer": "In total there are {{length}} Bids",
+        "form": {
+            "insuranceFrom": "Insurance From",
+            "claimNo": "Claim Number",
+            "jobCardNo": "Job Card Number",
+            "jobNoRequired": "Job Number is required.",
+            "addMoreDetails": "Add More Details",
+            "garageLocation": "Garage Location",
+            "bidDate": "Bid Closing Date",
+            "privateSuppliers": "Private Suppliers",
+            "privacy": "Privacy",
+            "createRequest": "Request Information",
+            "enterJob": "Enter Job Card Number",
+            "selectPrivateSuppliers": "Select Private Suppliers",
+            "enterclaimNo": "Enter Calim Number",
+            "ot/dp": "OD/TP",
+            "newReq": "Add New Request",
+            "selectInsurance": "Select Insurance From"
+        },
+        "tableColumn": {
+            "supplierName": "{{type}} Name",
+            "status": "Status",
+            "bidValue": "Bid Value",
+            "bidDate": "Submitted Time",
+            "submittedBids": "Submitted Bids",
+            "notInterested": "*NIS",
+            "notInterestedSuppliers": "Not Interested Suppliers"
+        },
+        "bidDetails": {
+            "partName": "Part Name",
+            "supplierName": "Supplier Name",
+            "partType": "Part Type",
+            "warranty": "Warranty",
+            "deliverDays": "Availability",
+            "qty": "Qty",
+            "originalPrice": "Original Price",
+            "discount": "Discount",
+            "discountType": "Discount Type",
+            "vat": "Vat (%)",
+            "totalPrice": "Total Price",
+            "days": "(days)",
+            "total": "Total",
+            "Preferred": "Preferred",
+            "Proposed": "Proposed",
+            "price": "Price",
+            "partImgs": "Part Images",
+            "modifyBid": "Modify Bid",
+            "noImgs": "this part has no images",
+            "noImgsBySupplier": "Supplier has not submitted any images for this part",
+            "comment": "Comment from {{name}}",
+            "bidOnReq": "Bid on a request",
+            "Reqlatest": "Latest Request",
+            "partsRequirments": "Parts Requirments",
+            "seeAll": "see all"
+        },
+        "bidDialog": {
+            "newBid": "Add Bid",
+            "titleByPart": "Bids for Part: ",
+            "titleBySupplier": "Bids for Supplier: ",
+            "titleByGarage": "Bids for Garage: ",
+            "changeSupp": "Change {{name}}",
+            "download": "Download"
+        }
+    },
+    "orders": {
+        "table_footer": "In total there are {{length}} Orders",
+        "table": {
+            "tableTitle": "Orders",
+            "date": "Date",
+            "customerName": "Customer Name",
+            "supplierName": "Supplier Name",
+            "number": "Phone Number",
+            "amount": "Order Amount",
+            "carInfo": "Vechile Information",
+            "total": "Total Amount",
+            "sttaus": "Order Status",
+            "delivery": "Delivery Fees",
+            "payment": "Payment Status"
+        },
+        "orderDetails": {
+           "PurchaseOrder": "Purchase Order",
+           "supplierAdd": "supplier address",
+           "customerAdd": "customer address",
+           "makeModel": "make & model",
+           "vinNumber": "vin number",
+           "jobCard": "job card",
+           "pageNo": "page no",
+           "lbo": "lbo",
+           "number": "number",
+           "lboDate": "lbo date",
+           "tableNote": "please supply the following and debit our account for the value",
+           "grossTotal": "gross total",
+           "vatAmount": "vat amount",
+           "netTotal": "net total"
+        },
+        "Permissions": {
+            "Permissions": "Permissions",
+            "PermissionName":"Permission Name",
+            "SearchbyName": "Search by Permission Name",
+            "PermissionURL": "Permission URL",
+            "SearchbyURL": "Search by Permission URL",
+            "CreatedAt": "Created At",
+            "NoPermissions": "No permissions found.",
+            "LoadingPermissions": "Loading permissions data. Please wait.",
+            "PermissionNameRequired.": "Permission Name is required.",
+            "PermissionURLRequired": "Permission URL is required.",
+            "deletePermission": "Are you sure you want to delete",
+            "deleteSelectedPermission": "Are you sure you want to delete selected permissions?",
+            "PermissionID": "Permission ID",
+            "NoRoleFound": "No role permissions found.",
+            "LoadingRolePermissions": "Loading role permissions data. Please wait."
+
+        },
+        "role": {
+            "title": "Roles",
+            "RoleName": "Role Name",
+            "RoleNameRequired": "Role Name is required.",
+            "RoleDescriptionRequired": "Role Description is required.",
+            "RoleDescription": "Role Description",
+            "loadingRole": "Loading roles data. Please wait.",
+            "noRole": "No roles found.",
+            "deleteSelectedRoles": "Are you sure you want to delete selected roles?"
+        }
+    }
+
+}

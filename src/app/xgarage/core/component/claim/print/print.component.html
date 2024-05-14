@@ -1,0 +1,11 @@
+<div class="layout-invoice-page">
+    <div class="text-center mb-2">
+        <h6 class="mb-2">OMAN UNITED  INSURANCE  CO.S.A.O.G.</h6>
+        <p>AUTO-Service Doc</p>
+    </div>
+    <div class="border-bottom-1 border-top-1 flex justify-content-between py-2">
+        <span>Report ID: {{claim.claimNo}}</span>
+        <span>Run on: {{claim.createdAt | date:'dd-MM-YY hh:mm a'}}</span>
+    </div>
+</div>
+<button (click)="print()">print</button>

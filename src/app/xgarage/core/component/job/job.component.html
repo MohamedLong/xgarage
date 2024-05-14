@@ -1,0 +1,147 @@
+<div class="grid">
+    <div class="col-12">
+        <p-toast></p-toast>
+
+        <!-- //Job Components  -->
+        <div class="card">
+            <p-toolbar styleClass="mb-4">
+                <ng-template pTemplate="left">
+                    <a pButton pRipple
+                        label="{{ 'operations.new' | translate }}" icon="pi pi-plus"
+                        class="p-button-success mr-2 mb-2" [routerLink]="['/jobs/new-job']" *ngIf="newAuth == true"></a>
+                </ng-template>
+
+                <ng-template pTemplate="right">
+                    <!-- <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000"
+                        label="{{ 'operations.import' | translate }}"
+                        chooseLabel="{{ 'operations.import' | translate }}"
+                        class="mr-2 mb-2 inline-block"></p-fileUpload> -->
+                    <button pButton pRipple label="{{ 'operations.export' | translate }}" icon="pi pi-upload"
+                        class="p-button-help mb-2" (click)="dt.exportCSV()" [disabled]="printAuth===false"></button>
+                </ng-template>
+            </p-toolbar>
+
+            <p-table #dt [value]="fillteredDto" (onPage)="loadRequests($event)" [columns]="cols" [rows]="10"
+                [paginator]="true" [globalFilterFields]="['id','jobNo','claimNo','partNames','jobStatus','jobTitle']"
+                [(selection)]="selectedEntries" [rowHover]="true" dataKey="id"
+                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                (onFilter)="onFilter($event, dt)" [showCurrentPageReport]="true"  responsiveLayout="scroll">
+                <ng-template pTemplate="caption">
+                    <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center table-header">
+                        <h5 class="md:mb-0 mb-2">{{ 'job.title' | translate }}</h5>
+                        <span class="p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                placeholder="{{ 'operations.filter' | translate }}" />
+                        </span>
+                    </div>
+                    <div class="mt-3 border-300 border-bottom-1">
+                        <ng-container *ngFor="let state of status">
+                            <button (click)="filterByStatus(state)" pButton pRipple type="button" label="{{state}}"
+                                [ngClass]="{'active': selectedState == state, 'text-black-alpha-40': selectedState !== state}"
+                                class="md:mr-3 px-2 py-1 md:p-2 p-button-text"></button>
+                        </ng-container>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th pColumn="id">{{ 'common.id' | translate }}
+                        </th>
+                        <th pColumn="jobNo">{{ 'job.tableColumn.jobNo' | translate }}
+                        </th>
+                        <th pColumn="jobTitle">{{ 'job.tableColumn.jobTitle' | translate }}
+                        </th>
+                        <th pColumn="partNames">{{ 'job.tableColumn.partNames' | translate }}
+                        </th>
+                        <th pColumn="submittedBids">{{ 'job.tableColumn.submittedBids' | translate }}
+                        </th>
+                        <th pColumn="jobStatus">{{ 'job.tableColumn.jobStatus' | translate }}
+                        </th>
+                        <th pColumn="claimNo">{{ 'job.tableColumn.claimNo' | translate }}
+                        </th>
+                        <!-- <th *ngIf="role && role == 1 && role !== 2"
+                            pColumn="actions">{{'common.actions' | translate }}
+                        </th> -->
+
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-job>
+                    <tr>
+                        <td>
+                            {{job.id}}
+                        </td>
+                        <td>
+                            <span>
+                                <a (click)="goDetails(job)" style="cursor: pointer;"><mark
+                                        class="text-blue-400 hover:text-pink-500">{{job.jobNo? job.jobNo : job.claimNo}}</mark>
+                                </a>
+                            </span>
+                        </td>
+                        <td>
+                            {{job.jobTitle}}
+                        </td>
+                        <td>
+                            {{job.partNames}}
+                        </td>
+                        <td>
+                            There are {{job.submittedBids? job.submittedBids : 0}} Submitted Bids
+                        </td>
+                        <td>
+                            {{job.jobStatus}}
+                        </td>
+                        <td>
+                            {{job.claimNo}}
+                        </td>
+
+                        <!-- <td *ngIf="role && role == 1 && role !== 2">
+                            <button  pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2"
+                            [disabled]="editAuth===false"  (click)="editParentAction(job)"></button>
+                            <button pButton pRipple icon="pi pi-times" class="p-button-rounded p-button-warning mt-2"
+                            [disabled]="deleteAuth===false"  (click)="deleteAction(job)"></button>
+                        </td> -->
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="summary">
+                    <div class="flex align-items-center justify-content-between">
+                        {{'job.table_footer' | translate: {length: masterDtos ? masterDtos.length : 0} }}
+                    </div>
+                </ng-template>
+            </p-table>
+        </div>
+
+        <p-dialog [(visible)]="masterDialog" [style]="{width: '300px'}" header="{{ 'job.jobDialog.title' | translate }}"
+            [modal]="true" styleClass="p-fluid">
+            <ng-template pTemplate="content">
+                <div class="formgrid grid">
+                    <div class="field col-12">
+                        <label for="jobNo">{{ 'job.tableColumn.jobNo' | translate }}</label>
+                        <input type="text" pInputText id="jobNo" [(ngModel)]="jobDto.jobNumber" required autofocus />
+                        <small class="p-error" *ngIf="submitted && !jobDto.jobNumber">{{
+                            'job.form.jobNoRequired' | translate }}</small>
+                    </div>
+                </div>
+            </ng-template>
+            <ng-template pTemplate="footer">
+                <button pButton pRipple label="{{ 'operations.cancel' | translate}} " icon="pi pi-times"
+                    class="p-button-text" (click)="hideParentDialog()"></button>
+                <button pButton pRipple label="{{ 'operations.save' | translate }}" icon="pi pi-check"
+                    class="p-button-text" (click)="updateParent()"
+                    [disabled]="!(jobDto.status == 1 && editAuth===true)"></button>
+            </ng-template>
+        </p-dialog>
+
+
+        <p-dialog [(visible)]="deleteSingleDialog" header="{{ 'operations.deleteConfirm' | translate }}" [modal]="true"
+            [style]="{width:'450px'}">
+            <div class="flex align-items-center justify-content-center">
+                <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+                <span>{{ 'operations.cancelMessage' | translate }}</span>
+            </div>
+            <ng-template pTemplate="footer">
+                <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No"
+                    (click)="deleteSingleDialog = false"></button>
+                <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes"
+                    (click)="confirmDelete()"></button>
+            </ng-template>
+        </p-dialog>
+    </div>

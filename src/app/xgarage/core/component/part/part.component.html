@@ -1,0 +1,129 @@
+<div class="grid">
+    <div class="col-12">
+        <p-toast></p-toast>
+
+        <div class="card">
+            <p-toolbar styleClass="mb-4">
+                <ng-template pTemplate="left">
+                    <button pButton pRipple label="{{ 'operations.new' | translate }}" icon="pi pi-plus"
+                        class="p-button-success mr-2 mb-2" (click)="masterDialog = true" [disabled]="newAuth===false"
+                        [hidden]="false"></button>
+                </ng-template>
+                <ng-template pTemplate="right">
+                    <button pButton pRipple label="{{ 'operations.export' | translate }}" icon="pi pi-upload"
+                        class="p-button-help mb-2" (click)="dt.exportCSV()" [disabled]="printAuth===false"></button>
+                </ng-template>
+            </p-toolbar>
+
+            <p-table #dt [value]="masters" [columns]="cols" [rows]="10" [paginator]="true"
+                [globalFilterFields]="['id','name','subCategory','category', 'statusText']"
+                [(selection)]="selectedEntries" [rowHover]="true" dataKey="id"
+                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                (onFilter)="onFilter($event, dt)" [showCurrentPageReport]="true" [loading]="loading" responsiveLayout="scroll">
+                <ng-template pTemplate="caption">
+                    <div
+                        class="flex flex-column md:flex-row md:justify-content-between md:align-items-center table-header">
+                        <h5 class="mb-2 md:mb-0">{{ 'part.title' | translate }}</h5>
+                        <span class="p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                placeholder="{{ 'operations.filter' | translate }}" />
+                        </span>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th pSortableColumn="id">{{ 'common.id' | translate }}<p-sortIcon field="id"></p-sortIcon>
+                        </th>
+                        <th pColumn="name">{{ 'part.tableColumn.partName' | translate }}
+                        </th>
+                        <th pColumn="subCategory">{{ 'part.tableColumn.partSubCategory' | translate }}
+                        </th>
+                        <th pColumn="category">{{ 'part.tableColumn.partCategory' | translate }}
+                        </th>
+                        <th pSortableColumn="status">{{ 'part.tableColumn.status' | translate }}<p-sortIcon
+                                field="status"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="enabled">{{'part.tableColumn.enabled' | translate}}
+                        </th>
+
+                        <th pSortableColumn="enabled">{{'operations.actions' | translate}}
+                        </th>
+
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-part>
+                    <tr>
+                        <td>
+                            {{part.id}}
+                        </td>
+                        <td>
+                            {{part.name}}
+                        </td>
+                        <td>
+                            {{part.subCategoryName}}
+                        </td>
+                        <td>
+                            {{part.categoryName}}
+                        </td>
+                        <td>
+                            {{part.statusText}}
+                        </td>
+                        <td>
+                            <button  pButton pRipple
+                                label="{{ 'operations.approve' | translate }}" class="p-button-success mr-2 mb-2"
+                                (click)="approvePart(part.id)" [disabled]="part.status !== 0">
+                            </button>
+                            <button  pButton pRipple
+                                label="{{ 'operations.reject' | translate }}" class="p-button-danger mr-2 mb-2"
+                                (click)="rejectPart(part.id)" [disabled]="part.status !== 0">
+                            </button>
+                        </td>
+                        <td>
+                            <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2"
+                                (click)="edit(part)" [disabled]="editAuth == false"></button>
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="summary">
+                    <div class="flex align-items-center justify-content-between">
+                        {{'part.table_footer' | translate: {length: masters ? masters.length : 0} }}
+                    </div>
+                </ng-template>
+            </p-table>
+        </div>
+
+    </div>
+</div>
+<!-- add/update Claim dialog -->
+<p-dialog [(visible)]="masterDialog" [breakpoints]="{ '960px': '90vw' }" [style]="{ width: '50vw' }"
+    header="Part" [modal]="true" styleClass="p-fluid">
+    <ng-template pTemplate="content">
+        <div class="grid">
+            <div class="field col-12 md:col-6">
+                <label for="">{{ 'part.tableColumn.partCategory' | translate }}</label>
+                <p-dropdown appendTo="body" [options]="categories" [(ngModel)]="selectedCategory" optionLabel="name"
+                    (onChange)="onCategoryChange(selectedCategory.id)"
+                    [ngClass]="{'ng-invalid ng-dirty': submitted && !selectedCategory}"
+                    placeholder="{{ 'part.partDialog.categoryPlaceHolder' | translate }}"></p-dropdown>
+            </div>
+            <div class="field col-12 md:col-6">
+                <label for="">{{ 'part.tableColumn.partSubCategory' | translate}}</label>
+                <p-dropdown appendTo="body" [options]="selectedSubCategries" [(ngModel)]="selectedSubCategory" optionLabel="name"
+                    [ngClass]="{'ng-invalid ng-dirty': submitted && !selectedSubCategory}"
+                    placeholder="{{ 'part.partDialog.subCategoryPlaceHolder' | translate}}"></p-dropdown>
+            </div>
+            <div class="field col-12">
+                <label>{{ 'part.tableColumn.partName' | translate}}</label>
+                <input [ngClass]="{'ng-invalid ng-dirty': submitted && !partName}" type="text" pInputText id="partname"
+                    [(ngModel)]="partName" required />
+            </div>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="footer">
+        <button pButton pRipple label="{{ 'operations.cancel' | translate}} " icon="pi pi-times" class="p-button-text"
+            (click)="hideDialog()"></button>
+        <button pButton pRipple label="{{ 'operations.save' | translate }}" icon="pi pi-check" class="p-button-text"
+            (click)="save()" [disabled]="false"></button>
+    </ng-template>
+</p-dialog>

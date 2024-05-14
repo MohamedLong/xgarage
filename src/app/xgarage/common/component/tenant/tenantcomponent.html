@@ -1,0 +1,167 @@
+<div class="grid">
+    <div class="col-12">
+        <p-toast></p-toast>
+
+       <!-- //Tenant Components  -->
+        <div class="card">
+            <p-toolbar styleClass="mb-4">
+                <ng-template pTemplate="left">
+                    <button pButton pRipple label="{{ 'operations.new' | translate }}"  icon="pi pi-plus" class="p-button-success mr-2 mb-2"
+                        (click)="new()" [disabled]="newAuth===false"></button>
+                </ng-template>
+
+                <ng-template pTemplate="right">
+                    <!-- <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="{{ 'operations.import' | translate }}"
+                        chooseLabel="{{ 'operations.import' | translate }}" class="mr-2 mb-2 inline-block"></p-fileUpload> -->
+                    <button pButton pRipple label="{{ 'operations.export' | translate }}" icon="pi pi-upload" class="p-button-help mb-2"
+                        (click)="dt.exportCSV()" [disabled]="printAuth===false"></button>
+                </ng-template>
+            </p-toolbar>
+
+            <p-table #dt [value]="masters" [columns]="cols" [rows]="10" [paginator]="true"
+                [globalFilterFields]="['id','name','cr','location', 'tenantType.name']"
+                [(selection)]="selectedEntries" [rowHover]="true" dataKey="id"
+                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                (onFilter)="onFilter($event, dt)"
+                [showCurrentPageReport]="true" responsiveLayout="scroll">
+                <ng-template pTemplate="caption">
+                    <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center table-header">
+                        <h5 class="mb-2 md:mb-0">{{ 'tenant.title' | translate }}</h5>
+                        <span class="p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                placeholder="{{ 'operations.filter' | translate }}" />
+                        </span>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th pSortableColumn="id">{{ 'common.id' | translate }}<p-sortIcon field="id"></p-sortIcon>
+                        </th>
+                        <th pColumn="name">{{ 'tenant.tableColumn.name' | translate }}
+                        </th>
+                        <th pColumn="cr">{{ 'tenant.tableColumn.cr' | translate }}
+                        </th>
+                        <th pColumn="location">{{ 'tenant.tableColumn.location' | translate }}
+                        </th>
+                        <th pColumn="tenantType">{{ 'tenant.tableColumn.tenantType' | translate }}
+                        </th>
+                        <th pColumn="profile">{{ 'tenant.tableColumn.profile' | translate }}
+                        </th>
+                        <th pColumn="enabled">{{'tenant.tableColumn.enabled' | translate}}
+                        </th>
+                        <th pColumn="actions">{{'operations.title' | translate}}
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-master>
+                    <tr>
+                        <td>
+                            {{master.id}}
+                        </td>
+                        <td>
+                            {{master.name}}
+                        </td>
+                        <td>
+                            {{master.cr}}
+                        </td>
+                        <td>
+                            {{master.location}}
+                        </td>
+                        <td>
+                            {{master.tenantType.name}}
+                        </td>
+                        <td>
+                            <!-- *ngIf="master.tenantType.id == 3" -->
+                            <button  pButton pRipple label="{{ 'operations.view' | translate }}"
+                            class="p-button-success mr-2 mb-2" (click)="viewProfile(master.id)">
+                        </button>
+                        </td>
+                        <td style="min-width: 12rem;">
+                            <p-inputSwitch type="button" [(ngModel)]="master.enabled" (onChange)="changeStatus(master.id, $event)">
+                            </p-inputSwitch>
+                        </td>
+                        <td>
+                            <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2"  [disabled]="editAuth===false"
+                              (click)="edit(master)"></button>
+                            <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning mt-2"  [disabled]="deleteAuth===false"
+                              (click)="deleteAction(master)"></button>
+                          </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="summary">
+                    <div class="flex align-items-center justify-content-between">
+                        {{'tenant.table_footer' | translate: {length: masters ? masters.length : 0} }}
+
+                    </div>
+                </ng-template>
+            </p-table>
+        </div>
+
+        <!-- add/update tenant dialog -->
+        <p-dialog [(visible)]="masterDialog" [style]="{width: '700px'}" header="{{ 'tenant.tenantDialog.title' | translate }}" [modal]="true"
+            styleClass="p-fluid">
+            <ng-template pTemplate="content">
+                <div class="formgrid grid">
+                    <div class="field col-12 md:col-6">
+                        <label for="name">{{ 'tenant.tableColumn.name' | translate }}</label>
+                        <input type="text" pInputText id="name" #name="ngModel" [(ngModel)]="master.name" required autofocus />
+                        <small class="p-error" *ngIf="submitted && !master.name">{{ 'tenant.tenantDialog.nameRequired' | translate }}</small>
+                    </div>
+                    <div class="field col-12 md:col-6">
+                        <label for="cr">{{ 'tenant.tableColumn.cr' | translate }}</label>
+                        <input type="text" pInputText id="cr" #cr="ngModel" [(ngModel)]="master.cr" required />
+                        <small class="p-error" *ngIf="submitted && !master.cr">{{ 'tenant.tenantDialog.crRequired' | translate }}</small>
+                    </div>
+                    <div class="field col-12 md:col-6">
+                        <label for="email">{{ 'tenant.tableColumn.email' | translate }}</label>
+                        <input type="text" pInputText id="email" #email="ngModel" [(ngModel)]="master.email" required />
+                        <small class="p-error" *ngIf="submitted && !master.email">{{ 'tenant.tenantDialog.emailRequired' | translate }}</small>
+                    </div>
+                    <div class="field col-12 md:col-6" >
+                        <label for="tenant">{{ 'tenant.tableColumn.tenantType' | translate }}</label>
+                        <p-dropdown [options]="tenantTypes" [(ngModel)]="selectedTenantType"
+                           optionLabel="name" [showClear]="true" [autoDisplayFirst]="false" required autofocus></p-dropdown>
+                         <small class="p-invalid" *ngIf="submitted && !master.tenantType">{{ 'tenant.tenantDialog.tenanTypeRequired' | translate }}</small>
+                    </div>
+                    <div class="field col-12 md:col-6">
+                        <label>{{ 'tenant.tableColumn.location' | translate }}</label>
+                        <textarea rows="1" cols="30" class="w-full" pInputTextarea [(ngModel)]="master.location"></textarea>
+                    </div>
+                </div>
+
+            </ng-template>
+            <ng-template pTemplate="footer">
+                <button pButton pRipple label="{{ 'operations.cancel' | translate}} " icon="pi pi-times" class="p-button-text"
+                    (click)="hideDialog()"></button>
+                <button pButton pRipple label="{{ 'operations.save' | translate }}" icon="pi pi-check" class="p-button-text" (click)="save()" [disabled]="!(editable)"></button>
+            </ng-template>
+        </p-dialog>
+
+        <p-dialog [(visible)]="deleteSingleDialog" header="{{ 'operations.deleteConfirm' | translate }}" [modal]="true" [style]="{width:'450px'}">
+            <div class="flex align-items-center justify-content-center">
+                <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+                <span *ngIf="master">{{ 'operations.deleteMessage' | translate }} <b>{{master.name}}</b>?</span>
+            </div>
+            <ng-template pTemplate="footer">
+                <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No"
+                    (click)="deleteSingleDialog = false"></button>
+                <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes"
+                    (click)="confirmDelete()"></button>
+            </ng-template>
+        </p-dialog>
+
+        <p-dialog [(visible)]="deleteMultipleDialog" header="{{ 'operations.deleteConfirm' | translate }}" [modal]="true" [style]="{width:'450px'}">
+            <div class="flex align-items-center justify-content-center">
+                <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+                <span>{{ 'operations.deleteAllMessage' | translate }}</span>
+            </div>
+            <ng-template pTemplate="footer">
+                <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No"
+                    (click)="deleteMultipleDialog = false"></button>
+                <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes"
+                    (click)="confirmDeleteSelected()"></button>
+            </ng-template>
+        </p-dialog>
+    </div>
+

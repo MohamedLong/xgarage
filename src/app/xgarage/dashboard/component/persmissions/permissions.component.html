@@ -1,0 +1,149 @@
+<div class="grid">
+  <div class="col-12">
+    <div class="card">
+      <p class="text-lg font-bold">{{'Permissions.Permissions' | translate}}</p>
+      <p-toolbar styleClass="mb-4">
+        <ng-template pTemplate="left">
+          <div class="my-2">
+            <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2"
+              (click)="openNew()" [disabled]="newAuth === true"></button>
+            <!-- <button pButton pRipple label="Delete" icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedPermissions()" [disabled]="!selectedPermissions || !selectedPermissions.length"></button> -->
+          </div>
+        </ng-template>
+
+        <ng-template pTemplate="right">
+          <!-- <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import" chooseLabel="Import" class="mr-2 inline-block"></p-fileUpload> -->
+          <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help"
+            (click)="dt.exportCSV()"></button>
+        </ng-template>
+      </p-toolbar>
+      <p-table #dt [value]="permissions" [columns]="cols" dataKey="id" [rows]="10" [loading]="loading" [rowHover]="true"
+        styleClass="p-datatable-gridlines" [paginator]="true" [globalFilterFields]="['permissionName,','name']"
+        responsiveLayout="scroll">
+        <ng-template pTemplate="caption">
+          <div class="flex justify-content-between flex-column sm:flex-row">
+            <button pButton label="Clear" class="p-button-outlined mb-2" icon="pi pi-filter-slash"
+              (click)="clear(dt)"></button>
+            <span class="p-input-icon-left mb-2">
+              <i class="pi pi-search"></i>
+              <input pInputText type="text" #filter (input)="dt.filterGlobal($event.target.value, 'contains')"
+                placeholder="Search Keyword" class="w-full" />
+            </span>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+          <tr>
+            <th pSortableColumn="id">Id <p-sortIcon field="id"></p-sortIcon>
+            </th>
+
+            <th>
+              <div class="flex justify-content-between align-items-center">
+                {{'Permissions.PermissionName' | translate}}
+                <p-columnFilter type="text" field="permissionName" display="menu"
+                  placeholder="{{'Permissions.SearchbyName' | translate}}"></p-columnFilter>
+              </div>
+            </th>
+
+            <th>
+              <div class="flex justify-content-between align-items-center">
+                {{'Permissions.PermissionURL' | translate}}
+                <p-columnFilter type="text" field="permissionUrl," display="menu"
+                  placeholder="{{'Permissions.SearchbyURL' | translate}}"></p-columnFilter>
+              </div>
+            </th>
+
+            <th>
+              <div class="flex justify-content-between align-items-center">
+                {{'Permissions.CreatedAt' | translate}}
+                <p-columnFilter type="date" field="createdAt" display="menu" placeholder="mm/dd/yyyy"></p-columnFilter>
+              </div>
+            </th>
+
+            <th></th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-permission>
+          <tr>
+            <td style="min-width: 12rem;">
+              {{permission.id}}
+            </td>
+            <td style="min-width: 12rem;">
+              {{permission.permissionName}}
+            </td>
+            <td style="min-width: 12rem;">
+              {{permission.permissionUrl}}
+            </td>
+            <td style="min-width: 12rem;">
+              {{permission.createdAt}}
+            </td>
+
+            <td>
+              <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2"
+                (click)="editPermission(permission)" [disabled]="editAuth === true"></button>
+              <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning mt-2"
+                (click)="deletePermission(permission)" [disabled]="deleteAuth === true"></button>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="7">{{'Permissions.NoPermissions' | translate}}</td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="loadingbody">
+          <tr>
+            <td colspan="7">{{'Permissions.LoadingPermissions' | translate}}</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+    <p-dialog [(visible)]="permissionDialog" [style]="{width: '450px'}" header="Permission Details" [modal]="true"
+      class="p-fluid">
+      <ng-template pTemplate="content">
+        <div class="field">
+          <label for="permissionName">{{'Permissions.PermissionName' | translate}}</label>
+          <input type="text" pInputText id="permissionName" [(ngModel)]="permission.permissionName" required autofocus
+            [ngClass]="{'ng-invalid ng-dirty' : submitted && !permission.permissionName}" />
+          <small class="ng-dirty ng-invalid" *ngIf="submitted && !permission.permissionName">{{'Permissions.PermissionNameRequired' | translate}}</small>
+        </div>
+        <div class="field">
+          <label for="permissionUrl,">{{'Permissions.PermissionURL' | translate}}</label>
+          <input type="text" pInputText id="permissionUrl" [(ngModel)]="permission.permissionUrl" required autofocus
+            [ngClass]="{'ng-invalid ng-dirty' : submitted && !permission.permissionUrl}" />
+          <small class="ng-dirty ng-invalid" *ngIf="submitted && !permission.permissionUrl">{{'Permissions.PermissionURLRequired' | translate}}</small>
+        </div>
+      </ng-template>
+
+      <ng-template pTemplate="footer">
+        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+        <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text"
+          (click)="savePermission()"></button>
+      </ng-template>
+    </p-dialog>
+
+    <p-dialog [(visible)]="deletePermissionDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
+      <div class="flex align-items-center justify-content-center">
+        <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+        <span *ngIf="permission">{{'Permissions.deletePermission' | translate}} <b>{{permission.name}}</b>?</span>
+      </div>
+      <ng-template pTemplate="footer">
+        <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No"
+          (click)="deletePermissionDialog = false"></button>
+        <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes" (click)="confirmDelete()"></button>
+      </ng-template>
+    </p-dialog>
+
+    <p-dialog [(visible)]="deletePermissionsDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
+      <div class="flex align-items-center justify-content-center">
+        <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+        <span>{{'Permissions.deleteSelectedPermission' | translate}}</span>
+      </div>
+      <ng-template pTemplate="footer">
+        <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No"
+          (click)="deletePermissionsDialog = false"></button>
+        <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes"
+          (click)="confirmDeleteSelected()"></button>
+      </ng-template>
+    </p-dialog>
+  </div>
+</div>

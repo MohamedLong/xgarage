@@ -1,0 +1,289 @@
+<p-toast></p-toast>
+<div class="wizard-body">
+    <div class="wizard-wrapper">
+        <div class="wizard-content">
+            <div class="wizard-card">
+                <div class="wizard-card-header">
+                    <div class="grid col py-3">
+                        <!-- (click)="activeTab = 'car-info'" -->
+                        <div class="col-6 tab flex align-items-center justify-content-center car-info-tab"
+                            [ngClass]="{'selected-tab': activeTab == 'car-info'}">
+                            <div class="title">{{ 'car.title' | translate }}</div>
+                        </div>
+                        <!-- (click)="activeTab = 'create-claim'" -->
+                        <div class="col-6 tab flex align-items-center justify-content-center request-tab"
+                            [ngClass]="{'selected-tab': activeTab === 'create-claim'}">
+                            <div class="title">{{ 'job.form.createRequest' | translate }}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="wizard-card-content car-info" [ngClass]="{'active-content': activeTab === 'car-info'}">
+                    <app-new-car [type]="'new claim'"></app-new-car>
+                </div>
+                <div class="wizard-card-content request" [ngClass]="{'active-content': activeTab === 'create-claim'}">
+
+                    <p-blockUI [target]="pnl" [blocked]="saved">
+                        <i class="pi pi-spin pi-spinner" style="font-size: 3rem"></i>
+                    </p-blockUI>
+                    <p-panel #pnl header="Update Claim" styleClass="mt-4">
+                        <div class="col-12 text-right">
+                            <button *ngIf="claim" pButton pRipple type="button"
+                                label="{{ 'operations.print' | translate }}" icon="pi pi-print"
+                                (click)="printdiv()"></button>
+                        </div>
+                        <form [formGroup]="claimForm">
+                            <div class="grid">
+                                <div class="col-12" *ngIf="claim">
+                                    <p-messages [styleClass]="'car-info'" severity="info">
+                                        <ng-template pTemplate>
+                                            <p class="mb-0">
+                                                {{claim.claimTitle}};
+                                                <!-- {{car.brandId.brandName}} {{car.carModelId.name}}
+                                                {{car.carModelYearId.year}} {{car.carModelTypeId.type}}; -->
+                                                Gear Box: {{claim.car.gearType}};
+                                                {{ 'car.form.chassisNo' | translate }}: {{claim.car.chassisNumber}};
+                                                {{ 'car.form.licencePlate' | translate }}: {{claim.car.plateNumber}}
+                                            </p>
+                                            <!-- <p-button label="Change" styleClass="p-button-sm"
+                                                (click)="activeTab = 'car-info'"></p-button> -->
+                                        </ng-template>
+                                    </p-messages>
+                                    <app-new-claim [claim]="claim"></app-new-claim>
+                                </div>
+                                <div class="col-12">
+                                    <p-divider align="left">
+                                        <b class="bg-white">{{ 'bid.form.addMoreDetails' | translate }}</b>
+                                    </p-divider>
+                                </div>
+                                <div class="col-12 md:col-6">
+                                    <label class="block mb-2">{{ 'claim.form.datetime' | translate }}</label>
+                                    <p-calendar (onSelect)="onRecievedDateSelect($event)" dataType="string"
+                                        formControlName="claimDate" appendTo="body" dateFormat="yy-mm-dd"
+                                        [showTime]="true"></p-calendar>
+                                    <small
+                                        *ngIf="submitted && !claimForm.get('claimDate').valid  && claimForm.get('claimDate').errors?.['required']"
+                                        class="p-error">{{ 'claim.form.calimDateRequired' | translate }}</small>
+                                </div>
+                                <div class="col-12 md:col-6">
+                                    <label class="block mb-2">{{ 'claim.form.delivryDate' | translate }}</label>
+                                    <p-calendar [minDate]="minExcDeliveryDate" dataType="string"
+                                        formControlName="excDeliveryDate" appendTo="body"
+                                        dateFormat="yy-mm-dd"></p-calendar>
+                                    <small
+                                        *ngIf="submitted && !claimForm.get('excDeliveryDate').valid  && claimForm.get('excDeliveryDate').errors?.['required']"
+                                        class="p-error">{{ 'claim.form.delivryDateRequired' | translate }}</small>
+                                </div>
+                                <div class="col-12 md:col-6">
+                                    <label class="block mb-3">{{ 'claim.form.km' | translate }}</label>
+                                    <input class="width-100 mb-2" type="number" formControlName="km" pInputText />
+                                    <small
+                                        *ngIf="submitted && !claimForm.get('km').valid  && claimForm.get('km').errors?.['required']"
+                                        class="p-error">{{ 'claim.form.kmRequired' | translate }}</small>
+                                </div>
+                                <div class="col-12 md:col-6 flex flex-column justify-content-center">
+                                    <div class="flex mb-2">
+                                        <p-checkbox styleClass="mr-2" (onChange)="onisBreakdownCheckedChanged($event)"
+                                            [ngModelOptions]="{standalone: true}" [(ngModel)]="isBreakdown"
+                                            [binary]="true" inputId="binary"></p-checkbox>
+                                        <label class="block">{{ 'claim.form.breakdown' | translate }}</label>
+                                    </div>
+                                    <div *ngIf="isBreakdown">
+                                        <p-calendar dataType="string" formControlName="breakDown" appendTo="body"
+                                            dateFormat="yy-mm-dd"></p-calendar>
+                                        <small
+                                            *ngIf="submitted && !claimForm.get('breakDown').valid  && claimForm.get('breakDown').errors?.['required']"
+                                            class="p-error">{{ 'claim.form.breakdownRequired' | translate }}</small>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <p-divider align="left">
+                                        <b class="bg-white">{{ 'claim.form.whatYouRecived' | translate }}</b>
+                                    </p-divider>
+                                </div>
+                                <div class="col-12 md:col-6">
+                                    <div *ngFor="let tick of ticks; let i = index;" class="field-checkbox flex-wrap">
+                                        <p-checkbox name="group" [value]="tick" [(ngModel)]="selectedTicks"
+                                            [ngModelOptions]="{standalone: true}" (onChange)="onTicksChange(tick)"
+                                            [inputId]="tick.id"></p-checkbox>
+                                        <label [for]="tick.id" class="mr-2">{{ tick.name }}</label>
+
+                                        <p-inplace (onDeactivate)="onTickRemarkAdd(tick)" styleClass="inplace-style"
+                                            class="mt-1" closable="closable" closeIcon="pi pi-check">
+                                            <ng-template pTemplate="display">
+                                                <span class="pi pi-comment text-indigo-500"
+                                                    style="vertical-align: middle;"></span>
+                                                <span class="ml-2">{{tick.remarks}}</span>
+                                            </ng-template>
+                                            <ng-template pTemplate="content">
+                                                <input class="p-inputtext-sm" type="text" [(ngModel)]="tick.remarks"
+                                                    [ngModelOptions]="{standalone: true}" pInputText />
+                                            </ng-template>
+                                        </p-inplace>
+                                    </div>
+                                    <!-- <small
+                                    *ngIf="submitted && !claimForm.get('claimTicks').valid  && claimForm.get('claimTicks').errors?.['required']"
+                                    class="p-error">Must Select One At Least</small> -->
+                                </div>
+                                <div class="col-12 md:col-6 text-center">
+                                    <label class="block mb-3">Out of Current Antecedent Remarkable</label>
+                                    <p-button *ngIf="claim && !claim.documents[1]" [disabled]="undo" icon="pi pi-undo"
+                                        styleClass="p-button-rounded p-button-secondary p-button-outlined"
+                                        (click)="undoMousePos()"></p-button>
+                                    <div class="mx-auto relative" style="max-width: 450px">
+                                        <div #secondCar (click)="claim && !claim.documents[1] && printMousePos($event)">
+                                            <img class="width-100" [src]="carImageSrc" alt="">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 text-center">
+                                    <p-button styleClass="w-6rem md:w-10rem mr-3 p-button-secondary" type="button"
+                                        label="Cancel" [routerLink]="['/claim-details']">
+                                    </p-button>
+                                    <button class="w-10rem md:w-15rem" pButton pRipple type="submit"
+                                        label="Update Claim" (click)="convertToImage()"
+                                        icon="{{saving? 'pi pi-spin pi-spinner' : ''}}" iconPos="right">
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                        <div id="print" hidden *ngIf="claim">
+                            <div style="text-align: center;margin-bottom: 10px;">
+                                <h5 style="margin-bottom: 0;">OMAN UNITED INSURANCE CO.S.A.O.G.</h5>
+                                <p>AUTO-Service Doc</p>
+                            </div>
+                            <div
+                                style="border: 1px solid #000;display: flex;justify-content: space-between;text-align: center;margin-bottom: 10px; border-width:1px 0 1px 0 ;padding: 10px 0; ">
+                                <span>Report ID: {{claim.claimNo}}</span>
+                                <span>Run on: {{claim.createdAt | date:'dd-MM-YY hh:mm a'}}</span>
+                            </div>
+                            <div style="margin-bottom: 8px;">
+                                <p style="font-size: 14px;font-weight: 600;margin-bottom: 5px;">To: AUTO Division</p>
+                                <small>Please recieve the attachment document for below mentioned vehicle</small>
+                            </div>
+                            <div style="border: 1px solid black;padding: 5px;">
+                                <p style="margin-bottom: 0;font-size: 14px;">
+                                    {{claim.claimTitle}};
+                                    Gear Box: {{claim.car.gearType}};
+                                    {{ 'car.form.chassisNo' | translate }}: {{claim.car.chassisNumber}};
+                                    {{ 'car.form.licencePlate' | translate }}: {{claim.car.plateNumber}}
+                                </p>
+                                <div style="display: flex;">
+                                    <p style="margin-right: 20px; margin-bottom: 0;font-size: 14px;">Claim No: <span
+                                            style="font-weight: 600;">{{claim.claimNo}}</span></p>
+                                    <p style="margin-right: 20px; margin-bottom: 0;font-weight: 600;font-size: 14px;">
+                                        {{claim.insuranceType}}</p>
+                                    <p style="margin-right: 20px; margin-bottom: 0;font-size: 14px;">Excess R.O: <span
+                                            style="font-weight: 600;">{{claim.excessRo}}</span></p>
+                                </div>
+                                <div style="display: flex;">
+                                    <p style="margin-right: 20px; margin-bottom: 0;font-size: 14px;">Customer Name:
+                                        <span style="font-weight: 600;">{{claim.customerName}}</span>
+                                    </p>
+                                    <p style="margin-right: 20px; margin-bottom: 0;font-size: 14px;">Contact No: <span
+                                            style="font-weight: 600;">{{claim.contactNo}}</span></p>
+                                </div>
+                            </div>
+                            <div
+                                style="display: flex;border: 1px solid black;margin-top: 5px; margin-bottom: 5px;text-align: right;">
+                                <div style="width: 50%;text-align: start;border-right: 1px solid #000;padding: 5px;">
+                                    <span
+                                        style="font-size: 14px;font-weight: 600;text-decoration: underline;">Remarks</span>
+
+                                </div>
+                                <div style="width: 50%;padding: 5px;text-align: center;">
+                                    <img *ngIf="claim.documents[0]" style="width: 215px;"
+                                        src="http://letsgo-oman.com:6060/api/v1/document/{{claim.documents[0]?.name}}"
+                                        alt="">
+                                </div>
+                            </div>
+                            <p style="font-size: 14px;text-decoration: underline;margin: 10px 0;font-weight: 600;">AUTO
+                                Division USE
+                                ONLY</p>
+                            <div>
+                                <table style="width: 100%;border-collapse: collapse;table-layout: fixed;">
+                                    <thead>
+                                        <th style="font-weight:400;border: 1px solid #000;">Received Date & Time</th>
+                                        <th style="font-weight:400;border: 1px solid #000;">Exc. Delivery Date</th>
+                                        <th style="font-weight:400;border: 1px solid #000;">K.M</th>
+                                        <th style="font-weight:400;border: 1px solid #000;">Breakdown</th>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td style="border: 1px solid #000;text-align: center;">
+                                                {{claimForm.get('claimDate').value | date}}</td>
+
+                                            <td style="border: 1px solid #000;text-align: center;">
+                                                {{claimForm.get('excDeliveryDate').value |
+                                                date}}</td>
+
+                                            <td style="border: 1px solid #000;text-align: center;">
+                                                {{claimForm.get('km').value}}</td>
+
+                                            <td style="border: 1px solid #000;text-align: center;">
+                                                {{claimForm.get('breakDown').value | date}}</td>
+                                        </tr>
+                                        <tr *ngFor="let tick of ticks;  let isFirst = first;  let i = index">
+                                            <th colspan="1"
+                                                style="font-weight:400;border: 1px solid #000; text-align: start; padding: 0 5px;">
+                                                {{tick.name}}</th>
+                                            <td colspan="1" style="border: 1px solid #000; padding: 0 5px;">
+                                                {{tick.remarks}}
+                                            </td>
+                                            <th colspan="1" rowspan="14" *ngIf="isFirst"
+                                                style="border: 1px solid #000;font-weight:400;text-align: left;vertical-align: text-top;padding: 0 5px;">
+                                                Repaier Request</th>
+                                            <td colspan="1" rowspan="14" *ngIf="isFirst"
+                                                style="border: 1px solid #000;">
+                                                <img *ngIf="claim.documents[1];else secimg"
+                                                    style="width: 215px;max-width: 100%;"
+                                                    src="http://letsgo-oman.com:6060/api/v1/document/{{claim.documents[1]?.name}}"
+                                                    alt="car sheet image">
+
+                                                <ng-template #secimg>
+                                                    <img
+                                                    style="width: 215px;max-width: 100%;"
+                                                    src='assets/layout/images/car.jpg'
+                                                    alt="car sheet image">
+                                                </ng-template>
+                                            </td>
+
+                                        </tr>
+                                        <tr>
+                                            <td style="font-size: 14px;border: 1px solid #000; text-align: start; padding:0 5px 30px"
+                                                colspan="2" rowspan="3">REMARK</td>
+                                        </tr>
+                                    </tbody>
+
+                                </table>
+                            </div>
+                            <div
+                                style="display: flex; justify-content: space-between; align-items: start;margin-top: 3px;">
+
+                                <p style="width: 50%;font-size: 12px;font-weight: 500;">
+                                    1- I hereby authorize you to do the necessary repair and grant your employees to
+                                    drive the vehicle inside and outside the workshop. <br>
+                                    2- I confirm that I have removed all valiable items and cash from the vehicle.<br>
+                                    3- Vehicle has to be collected wuthin one week of delivery notice, failing to do so
+                                    will result in a R.O. 5/ charge per day for parking.<br>
+                                    4- Repairing the vehicle is subject to spare availability, OUIC will not be liable
+                                    for non availability of spare parts form the local dealer.
+                                </p>
+                                <p style="width: 50%;direction: rtl;font-size: 12px;font-weight: 500;">
+                                    1.أفوضكم بموجب هذه الاستمارة لعمل ما يلزم نحو الاصلاح وأمنحكم تصريحا لقيادة المركبة
+                                    داخل وخارج الورشة. <br>
+                                    2.أقر وأوكد بأنني لم أترك في مركبتي أية أشياء ثمينة أو نقود. <br>
+                                    3.أتعهد باستلام المركبة عند إبلاغي بانتهاء الاصلاحات وفي حالة عدم استلامها خلال
+                                    اسبوع من تاريخ الإبلاغ فأنني سأتحمل تكاليف وقوف المركبة بواقع 5 ريالات عمانية عن كل
+                                    يوم تأخير.<br>
+                                    4.عملية الإصلاح تخضع لمدى توفر قطع الغيار ولن تكون الشركة مسؤولة عن التأخير الناتج
+                                    عن عدم توفر قطع لدى الوكيل المحلي.<br>
+                                </p>
+                            </div>
+                        </div>
+                    </p-panel>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

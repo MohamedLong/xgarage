@@ -1,0 +1,92 @@
+<div class="card">
+    <p-toast></p-toast>
+    <p-table #dt styleClass="p-invoice-datatable-responsive" (onPage)="loadBids($event)" [rows]="10" [paginator]="true" dataKey="id"
+        [globalFilterFields]="['jobTitle','client','partNames','jobStatus', 'totalPrice']"
+        [loading]="loading" [value]="fillteredBids" responsiveLayout="scroll" responsiveLayout="scroll">
+        <ng-template pTemplate="caption" class="pb-0">
+            <span class="p-input-icon-left ml-auto">
+                <i class="pi pi-search"></i>
+                <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Search keyword" />
+            </span>
+            <div class="mt-3 border-300 border-bottom-1">
+                <ng-container *ngFor="let state of status">
+                    <button (click)="filterByStatus(state)" pButton pRipple type="button" label="{{state}}" [ngClass]="{'active': selectedState == state, 'text-black-alpha-40': selectedState !== state}" class="mr-3 p-button-text"></button>
+                </ng-container>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th>{{ 'job.tableColumn.jobTitle' | translate }}</th>
+                <th>{{ 'job.tableColumn.client' | translate }}</th>
+                <th>{{ 'job.tableColumn.parts' | translate }}</th>
+                <th>{{ 'job.tableColumn.status' | translate }}</th>
+                <th>{{ 'bid.bidDetails.totalPrice' | translate }}</th>
+                <th>{{ 'operations.action' | translate }}</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-bid>
+            <tr [ngClass]="{'bg-green-50': highlight}">
+                <td class="font-bold">
+                    {{bid.jobTitle || bid.claimTitle || '-'}}
+                </td>
+                <td>
+                    {{bid.client || bid.tenantName}}
+                </td>
+                <td>
+                    {{bid.partNames}}
+                </td>
+                <td>
+                    {{bid.jobStatus? bid.jobStatus : bid.status? bid.status : '-'}}
+                </td>
+                <td>
+                    {{bid.lumpSumPrice?  (bid.lumpSumPrice | number ) : (bid.totalPrice | number )}}
+                </td>
+                <td>
+                    <button (click)="onBidView(bid)" pButton pRipple type="button" label="View" class="p-button-rounded p-button-outlined"></button>
+                </td>
+                <!-- {{bid | json}} -->
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+            <tr class="text-center">
+                <td class="text-center" colspan="5">{{'job.noBids' | translate}}</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+
+<p-dialog contentStyleClass="customeDialoagContentt" styleClass="customeDialoag" [header]="bidDetails[0]?.requestTitle" [(visible)]="displayModal" [modal]="true" [style]="{width: '90vw'}"
+    [draggable]="false" [resizable]="false">
+    <app-new-bid *ngIf="bidDetails.length > 0 && displayModal" [requests]="bidDetails" [type]="typeOfBid"></app-new-bid>
+</p-dialog>
+
+<p-dialog contentStyleClass="customeDialoagContentt" styleClass="customeDialoag" [header]="bidDetails[0]?.requestTitle" [(visible)]="displaylumpsumModal" [modal]="true" [style]="{width: '90vw'}"
+    [draggable]="false" [resizable]="false">
+    <p-table #dt dataKey="id" [value]="bidDetails" responsiveLayout="scroll">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>{{ 'job.tableColumn.parts' | translate }}</th>
+                <th>{{ 'bid.bidDetails.totalPrice' | translate }}</th>
+                <th>{{ 'operations.action' | translate }}</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-biddetail let-ri="rowIndex">
+            <!-- {{bidDetails[0]  | json}} -->
+            <tr [ngClass]="{'bg-green-50': highlight}" *ngIf="ri == 0">
+                <td class="font-bold">
+                    {{biddetail.partName}}
+                </td>
+                <td>
+                    {{lumpsumTotal}}
+                </td>
+
+                <td>
+                    <!-- {{bidDetails | json}} -->
+                    <!-- {{(bidDetails[0].statusId !== 'Open') || (bidDetails[0].statusId !== 'OnHold')}} -->
+                    <button [disabled]="(bidDetails[0].statusId !== 'Open') && (bidDetails[0].statusId !== 'OnHold')" (click)="confirmCancel(biddetail.bid)" pButton pRipple type="button" label="Cancel Bid" class="p-button-warning"></button>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</p-dialog>
+<p-confirmDialog></p-confirmDialog>

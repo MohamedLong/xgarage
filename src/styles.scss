@@ -1,0 +1,181 @@
+@import "../node_modules/primeng/resources/primeng.min.css";
+@import "../node_modules/primeflex/primeflex.scss";
+@import "../node_modules/primeicons/primeicons.css";
+@import "../node_modules/prismjs/themes/prism-coy.css";
+
+// @import "../node_modules/@fullcalendar/daygrid/main.min.css";
+// @import "../node_modules/@fullcalendar/timegrid/main.min.css";
+// @import "./appdemo.scss";
+.map-container {
+    width: 100% !important
+}
+
+
+@media screen and (max-width: 768px) {
+    .wizard-body .wizard-wrapper .wizard-content .wizard-card .wizard-card-content {
+        padding: 10px;
+    }
+
+    .layout-wrapper .layout-main .layout-content {
+        padding: 1rem;
+    }
+}
+
+.inplace-style .p-button.p-button-icon-only {
+    font-size: 0.875rem;
+    padding: 0.65625rem 1.09375rem;
+}
+
+.car-dialog .p-dialog-content {
+    padding: 0;
+}
+
+.req-field .p-fieldset-content {
+    padding: 0;
+}
+
+.p-dropdown {
+    text-align: start;
+}
+
+// .p-fileupload-choose,
+.p-dropdown,
+p-dropdown.p-element,
+p-inputnumber.p-element,
+p-inputnumber .p-inputnumber-input,
+.p-cascadeselect,
+.p-calendar,
+.p-multiselect,
+.p-autocomplete,
+.p-autocomplete>input {
+    width: 100% !important;
+}
+
+.car-info>.p-message.p-message-info {
+    border: none;
+}
+
+.p-tabview .p-tabview-panels {
+    padding: 0 !important;
+}
+
+.p-tabview .p-tabview-nav li {
+    margin-right: 5rem;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+.car-image {
+    max-width: 100%;
+    width: 500px;
+}
+
+.customeDialoagContentt {
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+    padding-bottom: 0px !important;
+}
+
+.customeDialoag>.p-dialog-header {
+    background-color: #4D4DE7 !important;
+    color: #fff !important;
+}
+
+.cell {
+    background-color: #f8f9fa;
+}
+
+.p-datatable table {
+    border-collapse: collapse;
+    min-width: 100%;
+    table-layout: fixed;
+}
+
+.p-datatable .p-datatable-thead>tr>th {
+    text-align: left;
+    padding: 1rem 1rem;
+    border: 1px solid #dee2e6;
+    border-width: 0 0 1px 0;
+    font-weight: 700;
+    color: #343a40;
+    background: #f8f9fa;
+    transition: box-shadow 0.2s;
+}
+
+.p-datatable .p-datatable-tbody>tr {
+    background: #ffffff;
+    color: #495057;
+    transition: box-shadow 0.2s;
+    outline-color: #C7D2FE;
+}
+
+.p-datatable .p-datatable-tbody>tr>td {
+    text-align: left;
+    border: 1px solid #dee2e6;
+    border-width: 0 0 1px 0;
+    padding: 1rem 1rem;
+}
+
+.p-datatable.p-datatable-gridlines .p-datatable-thead>tr>th {
+    border-width: 1px 1px 1px 1px;
+}
+
+.dashbaord-card.p-card .p-card-body {
+    height: calc(100% - 110px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.dashbaord-card.p-card .p-card-content {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.choose-btn .p-fileupload-buttonbar .p-button {
+    padding: 0.5rem !important;
+    font-size: 10px !important;
+}
+
+.choose-btn .p-fileupload .p-fileupload-content,
+.choose-btn .p-fileupload-row,
+.choose-btn .p-fileupload-content .p-progressbar {
+    display: none;
+}
+
+.choose-btn .p-fileupload-buttonbar,
+.choose-btn .p-fileupload-content {
+    background: none !important;
+    padding: 0 !important;
+    border: none !important;
+    color: #343a40 !important;
+    border-bottom: none !important;
+    border-top-right-radius: 0 !important;
+    border-top-left-radius: 0 !important;
+}
+
+
+.car-info.p-component {
+    width: 100%;
+    justify-content: space-between;
+}
+
+.car-info .p-message-wrapper {
+    justify-content: space-between;
+}
+
+.d-none {
+    display: none;
+}

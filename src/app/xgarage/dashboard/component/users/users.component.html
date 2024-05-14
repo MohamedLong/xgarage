@@ -1,0 +1,248 @@
+<div class="grid">
+    <div class="col-12">
+        <p-toast></p-toast>
+        <div class="card">
+            <p class="text-lg font-bold">{{'USER.TITLE_2' | translate}}</p>
+            <!-- <p-toast  [baseZIndex]="99999"></p-toast> -->
+            <p-toolbar styleClass="mb-4">
+                <ng-template pTemplate="left">
+                    <div class="my-2">
+                        <button pButton pRipple label="{{ 'operations.new' | translate }}" icon="pi pi-plus"
+                            class="p-button-success mr-2" [disabled]="newAuth === false" (click)="openNew()"></button>
+                        <!-- <button pButton pRipple label="Delete" icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedUsers()" [disabled]="!selectedUsers || !selectedUsers.length"></button> -->
+                    </div>
+                </ng-template>
+
+                <ng-template pTemplate="right">
+                    <!-- <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import" chooseLabel="Import" class="mr-2 inline-block"></p-fileUpload> -->
+                    <button pButton pRipple label="{{ 'operations.export' | translate }}" icon="pi pi-upload"
+                        class="p-button-help" (click)="dt.exportCSV()" [disabled]="printAuth === false"></button>
+                </ng-template>
+            </p-toolbar>
+            <p-table #dt [value]="users" [columns]="cols" dataKey="id" [rows]="10" [loading]="loading" [rowHover]="true"
+                responsiveLayout="scroll" [paginator]="true"
+                [globalFilterFields]="['email','enabled','firstName','lastName','phone','authProvider', 'tenant']"
+                >
+                <ng-template pTemplate="caption">
+                    <div class="flex justify-content-between flex-column sm:flex-row">
+                        <button pButton label="{{'USER.TABLEFILTER.CLEAR' | translate}}" class="p-button-outlined mb-2"
+                            icon="pi pi-filter-slash" (click)="clear(dt)"></button>
+                        <span class="p-input-icon-left mb-2">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" #filter
+                                (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                placeholder="{{'USER.TABLEFILTER.SEARCH' | translate}}" class="w-full" />
+                        </span>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th pSortableColumn="id">{{'USER.TABLECOLUMN.ID' | translate}}<p-sortIcon
+                                field="id"></p-sortIcon>
+                        </th>
+                        <th>
+                            <div class="flex justify-content-between align-items-center">
+                                {{ 'tenant.tableColumn.name' | translate }}
+                                <p-columnFilter type="text" field="lastName" display="menu"
+                                    placeholder="Search by last name">
+                                </p-columnFilter>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="flex justify-content-between align-items-center">
+                                {{'USER.TABLECOLUMN.USERID' | translate}}
+                                <p-columnFilter type="text" field="userId" display="menu"
+                                    placeholder="{{'USER.TABLECOLUMN.USERIDFILTER' | translate}}">
+                                </p-columnFilter>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="flex justify-content-between align-items-center">
+                                {{'USER.TABLECOLUMN.FIRSTNAME' | translate}}
+                                <p-columnFilter type="text" field="firstName" display="menu"
+                                    placeholder="{{'USER.TABLECOLUMN.FIRSTNAMEFILTER' | translate}}">
+                                </p-columnFilter>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="flex justify-content-between align-items-center">
+                                {{'USER.TABLECOLUMN.PHONE' | translate}}
+                                <p-columnFilter type="text" field="Phone" display="menu"
+                                    placeholder="{{'USER.TABLECOLUMN.PHONEFILTER' | translate}}"></p-columnFilter>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="flex justify-content-between align-items-center">
+                                {{'USER.TABLECOLUMN.EMAIL' | translate}}
+                                <p-columnFilter type="text" field="email" display="menu"
+                                    placeholder="{{'USER.TABLECOLUMN.EMAILFILTER' | translate}}"></p-columnFilter>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="flex justify-content-between align-items-center">
+                                {{'USER.TABLECOLUMN.CREATEDDATE' | translate}}
+                                <p-columnFilter type="date" field="createdDate" display="menu" placeholder="mm/dd/yyyy">
+                                </p-columnFilter>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="flex justify-content-between align-items-center">
+                                {{'USER.TABLECOLUMN.ENABLED' | translate}}
+                                <p-columnFilter type="boolean" field="enabled" display="menu"
+                                    placeholder="{{'USER.TABLECOLUMN.ENABLEDFILTER' | translate}}">
+                                </p-columnFilter>
+                            </div>
+                        </th>
+                        <th>{{ 'operations.title' | translate }}</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-user>
+                    <tr>
+                        <td>
+                            {{user.id}}
+                        </td>
+                        <td>
+                            {{user.tenant}}
+                        </td>
+                        <td  style="line-break: anywhere;">
+                            {{user.username}}
+                        </td>
+                        <td>
+                            {{user.firstName}}
+                        </td>
+                        <td>
+                            {{user.phone}}
+                        </td>
+                        <td style="line-break: anywhere;">
+                            {{user.email}}
+                        </td>
+                        <td>
+                            {{user.createdDate | date:'longDate'}}
+                        </td>
+
+                        <td>
+                            <p-inputSwitch type="button" [(ngModel)]="user.enabled"
+                                (onChange)="changeStatus(user.id, $event)">
+                            </p-inputSwitch>
+                        </td>
+                        <td>
+                            <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2"
+                                (click)="editUser(user)" [disabled]="editAuth === false"></button>
+                            <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning mt-2"
+                                [disabled]="deleteAuth === false" (click)="deleteUser(user)"></button>
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="emptymessage">
+                    <tr>
+                        <td colspan="7">{{'USER.TABLECOLUMN.EMPTYMESSAGE' | translate}}</td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="loadingbody">
+                    <tr>
+                        <td colspan="7">{{'USER.TABLECOLUMN.LOADING' | translate}}</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+        <p-dialog [(visible)]="userDialog" [style]="{height: '1000px', width: '500px'}"
+            header="{{'USER.DIALOG.TITLE' | translate}}" [modal]="true" class="p-fluid">
+            <ng-template pTemplate="content">
+                <div class="field">
+                    <label for="fristName">{{'USER.DIALOG.FIRSTNAME' | translate}}</label>
+                    <input type="text" pInputText id="firstName" [(ngModel)]="user.firstName" required autofocus
+                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !user.firstName}" />
+                    <small class="ng-dirty ng-invalid"
+                        *ngIf="submitted && !user.firstName">{{'USER.DIALOG.FIRSTNAMEREQUIRED' | translate}}</small>
+                </div>
+                <div class="field">
+                    <label for="lastName">{{'USER.DIALOG.LASTNAME' | translate}}</label>
+                    <input type="text" pInputText id="lastName" [(ngModel)]="user.lastName" required
+                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !user.lastName}" />
+                    <small class="ng-dirty ng-invalid"
+                        *ngIf="submitted && !user.lastName">{{'USER.DIALOG.LASTNAMEREQUIRED' | translate}}</small>
+                </div>
+
+                <div class="field">
+                    <label for="email">{{'USER.DIALOG.EMAIL' | translate}}</label>
+                    <input type="email" pInputText id="email" [(ngModel)]="user.email" required
+                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !user.email}" />
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !user.email">{{'USER.DIALOG.EMAILREQUIRED' |
+                        translate}}</small>
+                </div>
+
+                <div class="field">
+                    <label for="phone">{{'USER.DIALOG.PHONE' | translate}}</label>
+                    <input type="phone" pInputText id="phone" [(ngModel)]="user.phone" required
+                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !user.phone}" />
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !user.phone">{{'USER.DIALOG.PHONEREQUIRED' |
+                        translate}}</small>
+                </div>
+
+                <div class="field">
+                    <label for="userId">{{'USER.DIALOG.USERID' | translate}}</label>
+                    <input type="text" pInputText id="userId" [(ngModel)]="user.userId" required
+                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !user.userId}" />
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !user.userId">{{'USER.DIALOG.USERIDREQUIRED'
+                        | translate}}</small>
+                </div>
+
+                <div class="field">
+                    <label for="password">{{'USER.DIALOG.PASSWORD' | translate}}</label>
+                    <input type="password" pInputText id="password" [(ngModel)]="user.password" placeholder="********"
+                        required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !user.password}" />
+                    <small class="ng-dirty ng-invalid"
+                        *ngIf="submitted && !user.password">{{'USER.DIALOG.PASSWORDREQUIRED' | translate}}</small>
+                </div>
+
+                <div class="field" [(hidden)]="selectedRoleHidden">
+                    <label for="role">{{'USERMAINMENU.TABLECOLUMN.ROLE' | translate}}</label>
+                    <p-dropdown [options]="roles" [(hidden)]="selectedRoleHidden" [(ngModel)]="selectedRole"
+                        placeholder="{{'USER.DIALOG.ROLESELECTOR' | translate}}" optionLabel="roleName"
+                        [showClear]="true"></p-dropdown>
+                </div>
+
+                <div class="field">
+                    <label for="tenant">{{'auth.form.tenant' | translate}}</label>
+                    <p-dropdown [options]="tenants" [(ngModel)]="selectedTenant"
+                        placeholder="{{'USER.DIALOG.TenantSELECTOR' | translate}}" optionLabel="name"
+                        [showClear]="true"></p-dropdown>
+                </div>
+                <br />
+            </ng-template>
+
+            <ng-template pTemplate="footer">
+                <button pButton pRipple label="{{'USER.DIALOG.CANCEL' | translate}}" icon="pi pi-times"
+                    class="p-button-text" (click)="hideDialog()"></button>
+                <button pButton pRipple label="{{'USER.DIALOG.SAVE' | translate}}" icon="pi pi-check"
+                    class="p-button-text" (click)="saveUser()"></button>
+            </ng-template>
+        </p-dialog>
+
+        <p-dialog [(visible)]="deleteUserDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
+            <div class="flex align-items-center justify-content-center">
+                <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+                <span *ngIf="user">{{'USER.DIALOG.DELETEPROMPT' | translate}} <b>{{user.firstName}}</b>?</span>
+            </div>
+            <ng-template pTemplate="footer">
+                <button pButton pRipple icon="pi pi-times" class="p-button-text"
+                    label="{{'USER.DIALOG.PROMPTNOOPTION' | translate}}" (click)="deleteUserDialog = false"></button>
+                <button pButton pRipple icon="pi pi-check" class="p-button-text"
+                    label="{{'USER.DIALOG.PROMPTYESOPTION' | translate}}" (click)="confirmDelete()"></button>
+            </ng-template>
+        </p-dialog>
+
+        <p-dialog [(visible)]="deleteUsersDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
+            <div class="flex align-items-center justify-content-center">
+                <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+                <span>{{'USER.DIALOG.DELETESELECTEDPROMPT' | translate}}</span>
+            </div>
+            <ng-template pTemplate="footer">
+                <button pButton pRipple icon="pi pi-times" class="p-button-text"
+                    label="{{'USER.DIALOG.PROMPTNOOPTION' | translate}}" (click)="deleteUsersDialog = false"></button>
+                <button pButton pRipple icon="pi pi-check" class="p-button-text"
+                    label="{{'USER.DIALOG.PROMPTYESOPTION' | translate}}" (click)="confirmDeleteSelected()"></button>
+            </ng-template>
+        </p-dialog>
+    </div>
+</div>
