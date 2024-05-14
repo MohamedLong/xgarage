@@ -13,7 +13,8 @@ pipeline {
     stages {
         stage('Checkout and Build Angular') {
            steps {
-            checkout scmGit(branches: [[name: '*/angular']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/MohamedLong/xgarage.git']])
+            // checkout scmGit(branches: [[name: '*/angular']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/MohamedLong/xgarage.git']])
+            checkout scmGit(branches: [[name: '*/angular']], extensions: [], userRemoteConfigs: [[credentialsId: 'github', url: 'https://github.com/MohamedLong/xgarage.git']])
             sh "npm install --legacy-peer-deps"
             
             }
