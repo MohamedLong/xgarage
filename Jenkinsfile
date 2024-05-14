@@ -20,22 +20,10 @@ pipeline {
             }
             
         }
-
-        // stage('Checkout and Build Angular') {
-        //     steps {
-        //         checkout([$class: 'GitSCM',
-        //                 branches: [[name: '*/angular']],
-        //                 userRemoteConfigs: [[url: 'https://github.com/MohamedLong/xgarage.git']]])
-        //         // Install npm packages
-        //         sh "npm install --legacy-peer-deps"
-        //         sh "npm run build"
-        //     }
-        // }
-
         stage('Build Docker Image') {
             steps {
                 script {
-                    docker.build(env.DOCKER_IMAGE)
+                    sh 'docker build -t longali/xgarageangular .'
                 }
             }
         }
@@ -44,7 +32,7 @@ pipeline {
                 script {
                     withCredentials([string(credentialsId: 'dockerhubpwd', variable: 'dockerhubpwd')]) {
                         sh 'docker login -u longali -p ${dockerhubpwd}'
-                            docker.image(env.DOCKER_IMAGE).push('latest')
+                        sh 'docker push longali/xgarageangular'
                     }
                 }
             }
