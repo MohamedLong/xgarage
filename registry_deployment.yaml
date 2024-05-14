@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: registry-deployment
+spec:
+  selector:
+    matchLabels:
+      app: registry-deployment-app
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: registry-deployment-app
+    spec:
+      containers:
+        - name: registry
+          image: llongali/registryservice:latest
+          imagePullPolicy: Always # Assuming you have the image locally or on your cluster
+          ports:
+            - containerPort: 8756
+          # No environmental variables are needed as this deployment is not connected to MySQL
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: registry-svc
+spec:
+  selector:
+    app: registry-deployment-app
+  ports:
+    - protocol: "TCP"
+      port: 30000
+      targetPort: 8756
+      nodePort: 30000
+  type: NodePort
