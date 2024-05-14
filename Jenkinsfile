@@ -2,10 +2,6 @@ pipeline {
     agent {
         label 'spring'
     }
-
-    environment {
-        DOCKER_IMAGE = 'longali/xgarageangular'
-    }
     options {
         buildDiscarder(logRotator(numToKeepStr: '1')) // Keeps the last 1 builds
     }
