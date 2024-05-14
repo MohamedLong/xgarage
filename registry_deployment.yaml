@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: registry
-          image: llongali/registryservice:latest
+          image: longali/registryservice:latest
           imagePullPolicy: Always # Assuming you have the image locally or on your cluster
           ports:
             - containerPort: 8756
