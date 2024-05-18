@@ -2,7 +2,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: dashboard-ingress
-  namespace: kubernetes-dashboard
+  namespace: defult
 spec:
   rules:
     - host: spring.ip-teamway.com
