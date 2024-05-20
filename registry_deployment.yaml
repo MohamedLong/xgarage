@@ -29,7 +29,7 @@ spec:
     app: registry-deployment-app
   ports:
     - protocol: "TCP"
-      port: 30000
+      port: 8756
       targetPort: 8756
-      nodePort: 30000
+      nodePort: 8756
   type: NodePort
