@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kernel-deployment
+spec:
+  selector:
+    matchLabels:
+      app: kernel-deployment-app
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: kernel-deployment-app
+    spec:
+      containers:
+        - name: kernel
+          image: longali/kernelservice:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 5050
+          env: # Setting Enviornmental Variables
+            - name: EUREKA_DEFAULT_ZONE
+              valueFrom:
+                configMapKeyRef:
+                  name: xgarage-db-config
+                  key: EUREKA_DEFAULT_ZONE
+
+            - name: HOSTNAME
+              valueFrom:
+                configMapKeyRef:
+                  name: xgarage-db-config
+                  key: HOSTNAME
+
+---
+apiVersion: v1 # Kubernetes API version
+kind: Service # Kubernetes resource kind we are creating
+metadata: # Metadata of the resource kind we are creating
+  name: kernel-svc
+spec:
+  selector:
+    app: kernel-deployment-app
+  ports:
+    - protocol: "TCP"
+      port: 30002 # The port that the service is running on in the cluster
+      targetPort: 5050 # The port exposed by the service
+      nodePort: 30002 # The port exposed by the service on the node
+  type: NodePort # type of the service.
