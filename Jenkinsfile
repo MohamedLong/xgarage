@@ -38,13 +38,13 @@ pipeline {
             }
             
         }
-        stage('Deploy to Kubernetes') {
-            steps {
-                script {
-                    // Use kubectl to apply deployment YAML
-                    sh 'kubectl apply -f registry_deployment.yaml'
-                }
-            }
-        }
+        // stage('Deploy to Kubernetes') {
+        //     steps {
+        //         script {
+        //             // Use kubectl to apply deployment YAML
+        //             sh 'kubectl apply -f registry_deployment.yaml'
+        //         }
+        //     }
+        // }
     }
 }
