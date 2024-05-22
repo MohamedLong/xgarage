@@ -21,6 +21,8 @@ pipeline {
                 sh 'cp configMap.yaml /home/spring/k8s/'
                 sh 'cp gateway_deployment.yaml /home/spring/k8s/'
                 sh 'cp registry_deployment.yaml /home/spring/k8s/'
+                sh 'cp kernal_deployment.yaml /home/spring/k8s/'
+                
                 
                 
             }
