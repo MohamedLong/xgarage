@@ -21,6 +21,8 @@ pipeline {
                 // Copy the dashboard-ingress.yaml file to the target directory
                 sh 'cp dashboard-ingress.yaml /home/spring/k8s/'
                 sh 'cp eureka-ingress.yaml /home/spring/k8s/'
+                sh 'cp configMap.yaml /home/spring/k8s/'
+                
                 
             }
         }
