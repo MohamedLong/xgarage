@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: core-deployment
+spec:
+  selector:
+    matchLabels:
+      app: core-deployment-app
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: core-deployment-app
+    spec:
+      containers:
+        - name: core
+          image: longali/coreservice:latest
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 4040
+          env: # Setting Enviornmental Variables
+            - name: EUREKA_DEFAULT_ZONE
+              valueFrom:
+                configMapKeyRef:
+                  name: eureka-config
+                  key: EUREKA_DEFAULT_ZONE
+
+            - name: HOSTNAME
+              valueFrom:
+                configMapKeyRef:
+                  name: eureka-config
+                  key: HOSTNAME
+
+---
+apiVersion: v1 # Kubernetes API version
+kind: Service # Kubernetes resource kind we are creating
+metadata: # Metadata of the resource kind we are creating
+  name: core-svc
+spec:
+  selector:
+    app: core-deployment-app
+  ports:
+    - protocol: "TCP"
+      port: 4040 # The port that the service is running on in the cluster
+      targetPort: 4040 # The port exposed by the service
+      nodePort: 30003 # The port exposed by the service on the node
+  type: NodePort # type of the service.
