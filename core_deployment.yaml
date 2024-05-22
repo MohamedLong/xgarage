@@ -22,13 +22,13 @@ spec:
             - name: EUREKA_DEFAULT_ZONE
               valueFrom:
                 configMapKeyRef:
-                  name: eureka-config
+                  name: xgarage-db-config
                   key: EUREKA_DEFAULT_ZONE
 
             - name: HOSTNAME
               valueFrom:
                 configMapKeyRef:
-                  name: eureka-config
+                  name: xgarage-db-config
                   key: HOSTNAME
 
 ---
