@@ -14,14 +14,13 @@ pipeline {
             }
             
         }
-        stage('Copy Ingress File') {
+        stage('Copy yaml Files') {
             steps {
-                // Create the target directory if it doesn't exist
-                // sh 'mkdir -p /home/spring/k8s'
-                // Copy the dashboard-ingress.yaml file to the target directory
                 sh 'cp dashboard-ingress.yaml /home/spring/k8s/'
                 sh 'cp eureka-ingress.yaml /home/spring/k8s/'
                 sh 'cp configMap.yaml /home/spring/k8s/'
+                sh 'cp gateway_deployment.yaml /home/spring/k8s/'
+                sh 'cp registry_deployment.yaml /home/spring/k8s/'
                 
                 
             }
