@@ -15,7 +15,7 @@ spec:
       containers:
         - name: core
           image: longali/coreservice:latest
-          imagePullPolicy: Never
+          imagePullPolicy: Always
           ports:
             - containerPort: 4040
           env: # Setting Enviornmental Variables
