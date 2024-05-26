@@ -12,6 +12,8 @@ services:
     image: longali/gatewayservice:latest
     ports:
       - "6060:6060"
+    depends_on: 
+      - registry
     environment:
       - EUREKA_DEFAULT_ZONE=registryservice
       - HOSTNAME=registryservice
@@ -28,3 +30,30 @@ services:
   #     - registry  # Ensure registry is ready before frontend starts (if it interacts)
 
 # Removed the database service definition since you're connecting to a remote one.
+# version: "3.8"  # Specify a compatible Docker Compose version
+
+# services:
+#   # Eureka Registry Service
+#   eureka:
+#     image: eurekaserver:latest  # Use the official Eureka Server image
+#     ports:
+#       - "8761:8761"  # Map container port 8761 to host port 8761 (Eureka default)
+#     environment:
+#       - EUREKA_CLIENT_REGISTER_WAIT_TIME_IN_SECONDS=30  # Adjust registration wait time if needed
+
+#   # Spring Boot Gateway Service (replace with your actual image name)
+#   gateway:
+#     build: ./gateway-service  # Replace with the path to your gateway service Dockerfile
+#     ports:
+#       - "8080:8080"  # Map container port 8080 to host port 8080 (common for gateway)
+#     depends_on:
+#       - eureka  # Ensure Eureka starts before the gateway
+#     environment:
+#       - SPRING_APPLICATION_NAME: gateway-service  # Replace with your gateway service name
+#       - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE: http://eureka:8761/eureka/  # Register with Eureka
+#         # Replace 'http://eureka:8761/eureka/' with your Eureka service URL if different
+
+# networks:
+#   my-net:  # Optional network for internal communication (uncomment if needed)
+#     external: true  # Connect to an existing network (uncomment if needed)
+
