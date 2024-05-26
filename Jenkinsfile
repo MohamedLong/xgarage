@@ -8,27 +8,29 @@ pipeline {
 
     stages {
         stage('Checkout Git Repository') {
-           steps {
-            checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/MohamedLong/xgarage.git']])
-
-            }
-            
-        }
-        stage('Copy yaml Files') {
             steps {
-                sh 'cp dashboard-ingress.yaml /home/spring/k8s/'
-                sh 'cp eureka-ingress.yaml /home/spring/k8s/'
-                sh 'cp configMap.yaml /home/spring/k8s/'
-                sh 'cp gateway_deployment.yaml /home/spring/k8s/'
-                sh 'cp registry_deployment.yaml /home/spring/k8s/'
-                sh 'cp kernal_deployment.yaml /home/spring/k8s/'
-                sh 'cp core_deployment.yaml /home/spring/k8s/'
-                sh 'cp web_deployment.yaml /home/spring/k8s/'
-                
-                
-                
+                checkout scmGit(
+                    branches: [[name: '*/main']],
+                    extensions: [cloneSubModules: true], // Clone submodules (if any)
+                    userRemoteConfigs: [[url: 'https://github.com/MohamedLong/xgarage.git']]
+                )
+            }
+        }
+        stage('Copy YAML Files from Branch') {
+            steps {
+                script {
+                    // Define the destination directory
+                    def destinationDir = '/home/xgarage/public_html'
+
+                    // Use `sh` to get a list of YAML files in the branch
+                    def yamlFiles = sh(returnStdout: true, script: 'git ls-files "*.yaml"').split('\n')
+
+                    // Loop through each file and copy it to the destination
+                    for (file in yamlFiles) {
+                        sh "cp ${file} ${destinationDir}"
+                    }
+                }
             }
         }
     }
-    
 }
