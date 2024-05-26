@@ -17,14 +17,14 @@ services:
       - KERNAL_PORT=30002
       - CORE_PORT=30003
       - SHOP_PORT=30004
-  # Angular application frontend
-  frontend:
-    build: ./frontend  # Replace with the path to your Angular project directory
-    ports:
-      - "4200:4200"  # Adjust port if needed
-    volumes:
-      - ./frontend:/app  # Mount your Angular project directory inside the container
-    depends_on:
-      - registry  # Ensure registry is ready before frontend starts (if it interacts)
+  # # Angular application frontend
+  # frontend:
+  #   build: ./frontend  # Replace with the path to your Angular project directory
+  #   ports:
+  #     - "4200:4200"  # Adjust port if needed
+  #   volumes:
+  #     - ./frontend:/app  # Mount your Angular project directory inside the container
+  #   depends_on:
+  #     - registry  # Ensure registry is ready before frontend starts (if it interacts)
 
 # Removed the database service definition since you're connecting to a remote one.
