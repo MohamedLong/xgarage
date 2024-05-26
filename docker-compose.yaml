@@ -6,17 +6,16 @@ services:
     ports:
       - "8756:8756"
 
-  # # Gateway
-  # gateway:
-  #   image: longali/gatewayservice:latest
-  #   ports:
-  #     - "6060:6060"
-  #   environment:
-  #     - EUREKA_DEFAULT_ZONE=192.168.49.2:30000
-  #     - HOSTNAME=192.168.49.2
-  #     - KERNAL_PORT=30002
-  #     - CORE_PORT=30003
-  #     - SHOP_PORT=30004
+  # Gateway
+  gateway:
+    image: longali/gatewayservice:latest
+    ports:
+      - "6060:6060"
+    environment:
+      - EUREKA_DEFAULT_ZONE=192.168.100.10:8756
+      - HOSTNAME=192.168.100.10
+      - KERNAL_PORT=5050
+      - CORE_PORT=4040
   # # Angular application frontend
   # frontend:
   #   build: ./frontend  # Replace with the path to your Angular project directory
