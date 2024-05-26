@@ -12,6 +12,7 @@ services:
   # Gateway
   gateway:
     image: longali/gatewayservice:latest
+    container_name: gatewayservice
     ports:
       - "6060:6060"
     depends_on: 
