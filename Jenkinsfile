@@ -22,7 +22,7 @@ pipeline {
                             def remoteDir = '/home/xgarage/public_html'
         
                             // Copy Build files to the remote server
-                            sh "sshpass -p '${env.REMOTE_PASSWORD}' scp -r /home/spring/workspace/xgarage_automation_main/* ${env.REMOTE_USER}@${remoteHost}:${remoteDir}"
+                            sh "sshpass -p '${env.REMOTE_PASSWORD}' scp -r /home/spring/workspace/xgarage_automation_main_2/* ${env.REMOTE_USER}@${remoteHost}:${remoteDir}"
         
                         }
                 }
