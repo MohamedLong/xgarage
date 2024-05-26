@@ -9,11 +9,12 @@ pipeline {
     stages {
         stage('Checkout Git Repository') {
             steps {
-                checkout scmGit(
-                    branches: [[name: '*/main']],
-                    extensions: [cloneSubModules: true], // Clone submodules (if any)
-                    userRemoteConfigs: [[url: 'https://github.com/MohamedLong/xgarage.git']]
-                )
+                git branch: 'main', credentialsId: 'jenkins_live', url: 'https://github.com/MohamedLong/xgarage.git'
+                // checkout scmGit(
+                //     branches: [[name: '*/main']],
+                //     extensions: [cloneSubModules: true], // Clone submodules (if any)
+                //     userRemoteConfigs: [[url: 'https://github.com/MohamedLong/xgarage.git']]
+                // )
             }
         }
         stage('Copy YAML Files from Branch') {
