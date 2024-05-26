@@ -3,6 +3,7 @@ version: '3.9'
 services:
   registry:
     image: longali/registryservice:latest 
+    container_name: registryservice
     ports:
       - "8756:8756"
 
@@ -12,8 +13,8 @@ services:
     ports:
       - "6060:6060"
     environment:
-      - EUREKA_DEFAULT_ZONE=192.168.100.10:8756
-      - HOSTNAME=192.168.100.10
+      - EUREKA_DEFAULT_ZONE=registryservice:8756
+      - HOSTNAME=registryservice
       - KERNAL_PORT=5050
       - CORE_PORT=4040
   # # Angular application frontend
