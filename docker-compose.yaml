@@ -6,6 +6,8 @@ services:
     container_name: registryservice
     ports:
       - "8756:8756"
+    environment:
+       - EUREKA_CLIENT_REGISTER_WAIT_TIME_IN_SECONDS=30  # Adjust registration wait time if needed
 
   # Gateway
   gateway:
