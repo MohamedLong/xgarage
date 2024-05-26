@@ -12,8 +12,8 @@ services:
     ports:
       - "6060:6060"
     environment:
-      - EUREKA_DEFAULT_ZONE=192.168.100.10:8756
-      - HOSTNAME=192.168.100.10
+      - EUREKA_DEFAULT_ZONE=registry:8756
+      - HOSTNAME=registry
       - KERNAL_PORT=5050
       - CORE_PORT=4040
   # # Angular application frontend
