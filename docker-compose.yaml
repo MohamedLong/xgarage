@@ -19,7 +19,7 @@ services:
     networks:
       - springboot-network
     environment:
-      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://eureka-service:8761/eureka/"
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://192.168.100.10:8761/eureka/"
       EUREKA_INSTANCE_PREFERIPADDRESS: "true"
 
 networks:
