@@ -12,7 +12,7 @@ services:
   # Gateway
   xgarage-api-gateway:
     image: longali/gatewayservice:latest
-    container_name: eureka
+    container_name: xgarage-api-gateway
     ports:
       - "6060:6060"
     depends_on: 
