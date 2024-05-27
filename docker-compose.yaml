@@ -3,7 +3,7 @@ version: '3.9'
 services:
   eureka:
     image: longali/registryservice:latest 
-    container_name: registryservice
+    container_name: eureka
     ports:
       - "8761:8761"
     environment:
@@ -12,7 +12,7 @@ services:
   # Gateway
   xgarage-api-gateway:
     image: longali/gatewayservice:latest
-    container_name: gatewayservice
+    container_name: eureka
     ports:
       - "6060:6060"
     depends_on: 
