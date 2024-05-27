@@ -8,6 +8,11 @@ services:
       - "8761:8761"
     networks:
       - springboot-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8761/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
   gateway-service:
     image: longali/gatewayservice:latest
@@ -15,16 +20,19 @@ services:
     ports:
       - "6060:6060"
     depends_on:
-      - eureka-service
+      eureka-service:
+        condition: service_healthy
     networks:
       - springboot-network
     environment:
-      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://192.168.100.10:8761/eureka/"
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://eureka-service:8761/eureka/"
       EUREKA_INSTANCE_PREFERIPADDRESS: "true"
+    entrypoint: ["./wait-for-it.sh", "eureka-service", "8761", "--", "java", "-jar", "Gateway-1.0-SNAPSHOT.jar"]
 
 networks:
   springboot-network:
     driver: bridge
+
 
 
 
