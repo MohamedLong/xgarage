@@ -18,8 +18,8 @@ services:
     depends_on: 
       - eureka
     environment:
-      - EUREKA_DEFAULT_ZONE=161.8.109.180:8761
-      - HOSTNAME=161.8.109.180
+      - EUREKA_DEFAULT_ZONE=192.168.100.10:8761
+      - HOSTNAME=192.168.100.10
       - KERNAL_PORT=5050
       - CORE_PORT=4040
   # # Angular application frontend
