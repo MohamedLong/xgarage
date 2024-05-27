@@ -16,7 +16,7 @@ services:
     ports:
       - "6060:6060"
     depends_on: 
-      - registry
+      - eureka
     environment:
       - EUREKA_DEFAULT_ZONE=registryservice:8761
       - HOSTNAME=registryservice
