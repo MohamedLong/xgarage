@@ -5,7 +5,7 @@ services:
     image: longali/registryservice:latest 
     container_name: registryservice
     ports:
-      - "8756:8756"
+      - "8761:8761"
     environment:
        - EUREKA_CLIENT_REGISTER_WAIT_TIME_IN_SECONDS=30  # Adjust registration wait time if needed
 
@@ -18,7 +18,7 @@ services:
     depends_on: 
       - registry
     environment:
-      - EUREKA_DEFAULT_ZONE=gatewayservice:8756
+      - EUREKA_DEFAULT_ZONE=gatewayservice:8761
       - HOSTNAME=gatewayservice
       - KERNAL_PORT=5050
       - CORE_PORT=4040
