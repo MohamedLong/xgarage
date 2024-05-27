@@ -27,11 +27,11 @@ services:
     environment:
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://eureka-service:8761/eureka/"
       EUREKA_INSTANCE_PREFERIPADDRESS: "true"
-    entrypoint: ["./wait-for-it.sh", "eureka-service", "8761", "--", "java", "-jar", "Gateway-1.0-SNAPSHOT.jar"]
 
 networks:
   springboot-network:
     driver: bridge
+
 
 
 

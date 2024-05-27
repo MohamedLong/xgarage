@@ -1,5 +1,5 @@
-#!/bin/bash
 # wait-for-it.sh
+#!/bin/bash
 
 host="$1"
 shift
@@ -24,3 +24,4 @@ else
   echo "$host:$port is up"
   exec $cmd
 fi
+
