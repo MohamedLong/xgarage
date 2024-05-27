@@ -1,7 +1,7 @@
 version: '3.9'
 
 services:
-  registry:
+  eureka:
     image: longali/registryservice:latest 
     container_name: registryservice
     ports:
@@ -10,7 +10,7 @@ services:
        - EUREKA_CLIENT_REGISTER_WAIT_TIME_IN_SECONDS=30  # Adjust registration wait time if needed
 
   # Gateway
-  gateway:
+  xgarage-api-gateway:
     image: longali/gatewayservice:latest
     container_name: gatewayservice
     ports:
