@@ -7,7 +7,7 @@ WORKDIR /app
 COPY target/*.jar /app/service-registry-0.0.1-SNAPSHOT.jar
 
 # Expose any ports your application uses (if necessary)
-EXPOSE 8756
+EXPOSE 8761
 
 # Command to run the Spring Boot application
 CMD ["java", "-jar", "service-registry-0.0.1-SNAPSHOT.jar"]
