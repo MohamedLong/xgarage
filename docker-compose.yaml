@@ -56,7 +56,5 @@ services:
 #       - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE: http://eureka:8761/eureka/  # Register with Eureka
 #         # Replace 'http://eureka:8761/eureka/' with your Eureka service URL if different
 
-# networks:
-#   my-net:  # Optional network for internal communication (uncomment if needed)
-#     external: true  # Connect to an existing network (uncomment if needed)
-
+networks:
+  my-net:
