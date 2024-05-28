@@ -1,35 +1,38 @@
-version: '3.9'
+version: '3.8'
 
 services:
-  eureka:
-    image: longali/registryservice:latest 
-    container_name: eureka
+  eureka-service:
+    image: longali/registryservice:latest
+    container_name: eureka-service
     ports:
       - "8761:8761"
     networks:
       - springboot-network
-    environment:
-       - EUREKA_CLIENT_REGISTER_WAIT_TIME_IN_SECONDS=30  # Adjust registration wait time if needed
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8761/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
-  # Gateway
-  xgarage-api-gateway:
+  gateway-service:
     image: longali/gatewayservice:latest
-    container_name: xgarage-api-gateway
+    container_name: gateway-service
     ports:
       - "6060:6060"
-    depends_on: 
-      - eureka
+    depends_on:
+      eureka-service:
+        condition: service_healthy
     networks:
       - springboot-network
     environment:
-      - EUREKA_DEFAULT_ZONE=192.168.100.10:8761
-      - HOSTNAME=192.168.100.10
-      - KERNAL_PORT=5050
-      - CORE_PORT=4040
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://eureka-service:8761/eureka/"
+      EUREKA_INSTANCE_PREFERIPADDRESS: "true"
+    entrypoint: ["./wait-for-it.sh", "eureka-service:8761", "--", "java", "-jar", "/app.jar"]
 
 networks:
   springboot-network:
     driver: bridge
+
 
 
 
