@@ -11,6 +11,13 @@ services:
     environment:
        - EUREKA_CLIENT_REGISTER_WAIT_TIME_IN_SECONDS=30  # Adjust registration wait time if needed
 
+    healthcheck:
+        test: ["CMD", "curl", "-f", "http://192.168.100.10:8761"]
+        interval: 30s
+        timeout: 10s
+        retries: 2
+
+
   # Gateway
   xgarage-api-gateway:
     image: longali/gatewayservice:latest
@@ -18,7 +25,8 @@ services:
     ports:
       - "6060:6060"
     depends_on: 
-      - eureka
+      eureka:
+        condition: service_healthy
     networks:
       - springboot-network
     environment:
@@ -26,11 +34,7 @@ services:
       - HOSTNAME=192.168.100.10
       - KERNAL_PORT=5050
       - CORE_PORT=4040
-    healthcheck:
-        test: ["CMD", "curl", "-f", "http://192.168.100.10:8761"]
-        interval: 30s
-        timeout: 10s
-        retries: 2
+
 
 networks:
   springboot-network:
