@@ -6,10 +6,10 @@ eureka:
     register-with-eureka: true
     fetch-registry: true
     service-url:
-      defaultZone: http://192.168.100.10:8761/eureka/
+      defaultZone: http://localhost:8761/eureka/
 
     instance:
-      hostname: http://192.168.100.10
+      hostname: http://localhost
 
 discovery:
   client:
