@@ -12,9 +12,9 @@ services:
        - EUREKA_CLIENT_REGISTER_WAIT_TIME_IN_SECONDS=30  # Adjust registration wait time if needed
 
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8761/actuator/health"]
-      interval: 30s
-      timeout: 10s
+      test: ["CMD", "curl", "-f", "http://161.8.109.180:8761/actuator/health"]
+      interval: 15s
+      timeout: 5s
       retries: 3
 
 
@@ -30,8 +30,8 @@ services:
     networks:
       - springboot-network
     environment:
-      - EUREKA_DEFAULT_ZONE=192.168.100.10:8761
-      - HOSTNAME=192.168.100.10
+      - EUREKA_DEFAULT_ZONE=161.8.109.180:8761
+      - HOSTNAME=161.8.109.180
       - KERNAL_PORT=5050
       - CORE_PORT=4040
 
