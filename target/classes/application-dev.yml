@@ -42,7 +42,7 @@ spring:
             allowedMethods: "*"
       routes:
         - id: xgarage-kernel-service
-          uri: http://${HOSTNAME}:${KERNAL_PORT}
+          uri: http://161.8.109.180:5050
 
           predicates:
             - Path=/api/**
@@ -51,7 +51,7 @@ spring:
             - SetResponseHeader=Access-Control-Allow-Methods, *
             - SetResponseHeader=Access-Control-Expose-Headers, *
         - id: xgarage-core-service
-          uri: http://${HOSTNAME}:${CORE_PORT}
+          uri: http://161.8.109.180:4040
           predicates:
             - Path=/core/**
           filters:
@@ -60,7 +60,7 @@ spring:
             - SetResponseHeader=Access-Control-Allow-Methods, *
             - SetResponseHeader=Access-Control-Expose-Headers, *
         - id: xgarage-shop-service
-          uri: http://${HOSTNAME}:${SHOP_PORT}
+          uri: http://161.8.109.180:SHOP_PORT}
           predicates:
             - Path=/store/**
           filters:
