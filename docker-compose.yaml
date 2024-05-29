@@ -3,6 +3,7 @@ version: '3.8'  # Adjust version if needed
 services:
   eureka:
     image: longali/registryservice:latest
+    container_name: eureka
     ports:
       - "8761:8761"  # Expose the port to the host machine
     # environment:
@@ -10,6 +11,7 @@ services:
 
   gateway:
     image: longali/gatewayservice:latest
+    container_name: gateway
     ports:
       - "6060:6060"  # Replace with your desired gateway port
     depends_on:
