@@ -21,4 +21,4 @@ services:
     networks:
       - my-network  # Connect gateway to the new network
     environment:
-      - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://192.168.100.10:8761/  # Registration URL (can still use service name)
+      - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://172.23.0.2:8761/  # Registration URL (can still use service name)
