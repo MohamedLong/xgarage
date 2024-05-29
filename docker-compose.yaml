@@ -1,5 +1,3 @@
-version: '3.8'  # Adjust version if needed
-
 networks:
   my-network:  # Define the new network
 
