@@ -5,8 +5,8 @@ services:
     image: longali/registryservice:latest
     ports:
       - "8761:8761"  # Expose the port to the host machine
-    environment:
-      - EUREKA_CLIENT_REGISTER_SERVICE_URL=http://eureka:8761/eureka
+    # environment:
+    #   - EUREKA_CLIENT_REGISTER_SERVICE_URL=http://eureka:8761/eureka
 
   gateway:
     image: longali/gatewayservice:latest
@@ -14,9 +14,9 @@ services:
       - "6060:6060"  # Replace with your desired gateway port
     depends_on:
       - eureka  # Ensure Eureka starts first
-    restart: on-failure
+    # restart: on-failure
     environment:
-      - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://192.168.100.10:8761/eureka/  # Registration URL
+      - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://eureka:8761/  # Registration URL
 
 
 
