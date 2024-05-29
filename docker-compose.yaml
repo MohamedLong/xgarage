@@ -1,13 +1,16 @@
 version: '3.8'  # Adjust version if needed
 
+networks:
+  my-network:  # Define the new network
+
 services:
   eureka:
     image: longali/registryservice:latest
     container_name: eureka
     ports:
       - "8761:8761"  # Expose the port to the host machine
-    # environment:
-    #   - EUREKA_CLIENT_REGISTER_SERVICE_URL=http://eureka:8761/eureka
+    networks:
+      - my-network  # Connect eureka to the new network
 
   gateway:
     image: longali/gatewayservice:latest
@@ -16,43 +19,7 @@ services:
       - "6060:6060"  # Replace with your desired gateway port
     depends_on:
       - eureka  # Ensure Eureka starts first
-    # restart: on-failure
+    networks:
+      - my-network  # Connect gateway to the new network
     environment:
-      - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://localhost:8761/  # Registration URL
-
-
-
-
-  # # Angular application frontend
-  # frontend:
-  #   build: ./frontend  # Replace with the path to your Angular project directory
-  #   ports:
-  #     - "4200:4200"  # Adjust port if needed
-  #   volumes:
-  #     - ./frontend:/app  # Mount your Angular project directory inside the container
-  #   depends_on:
-  #     - registry  # Ensure registry is ready before frontend starts (if it interacts)
-
-# Removed the database service definition since you're connecting to a remote one.
-# version: "3.8"  # Specify a compatible Docker Compose version
-
-# services:
-#   # Eureka Registry Service
-#   eureka:
-#     image: eurekaserver:latest  # Use the official Eureka Server image
-#     ports:
-#       - "8761:8761"  # Map container port 8761 to host port 8761 (Eureka default)
-#     environment:
-#       - EUREKA_CLIENT_REGISTER_WAIT_TIME_IN_SECONDS=30  # Adjust registration wait time if needed
-
-#   # Spring Boot Gateway Service (replace with your actual image name)
-#   gateway:
-#     build: ./gateway-service  # Replace with the path to your gateway service Dockerfile
-#     ports:
-#       - "8080:8080"  # Map container port 8080 to host port 8080 (common for gateway)
-#     depends_on:
-#       - eureka  # Ensure Eureka starts before the gateway
-#     environment:
-#       - SPRING_APPLICATION_NAME: gateway-service  # Replace with your gateway service name
-#       - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE: http://eureka:8761/eureka/  # Register with Eureka
-#         # Replace 'http://eureka:8761/eureka/' with your Eureka service URL if different
+      - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://eureka:8761/  # Registration URL (can still use service name)
