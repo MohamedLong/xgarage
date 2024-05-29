@@ -19,7 +19,7 @@ services:
       - "6060:6060"  # Replace with your desired gateway port
     depends_on:
       - eureka  # Ensure Eureka starts first
-    restart: on-failure
+    # restart: on-failure
     networks:
       - my-network  # Connect gateway to the new network
     environment:
