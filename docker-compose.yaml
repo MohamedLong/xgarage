@@ -1,5 +1,5 @@
-networks:
-  spring:  # Define the new network
+# networks:
+#   spring:  # Define the new network
 
 services:
   eureka:
@@ -8,7 +8,7 @@ services:
     ports:
       - "8761:8761"  # Expose the port to the host machine
     networks:
-      - spring  # Connect eureka to the new network
+      - docker_default  # Connect eureka to the new network
 
   gateway:
     image: longali/gatewayservice:latest
@@ -19,6 +19,6 @@ services:
       - eureka  # Ensure Eureka starts first
     # restart: on-failure
     networks:
-      - spring  # Connect gateway to the new network
+      - docker_default  # Connect gateway to the new network
     # environment:
     #   - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://172.23.0.2:8761/  # Registration URL (can still use service name)
