@@ -1,5 +1,5 @@
 networks:
-  my-network:  # Define the new network
+  spring:  # Define the new network
 
 services:
   eureka:
