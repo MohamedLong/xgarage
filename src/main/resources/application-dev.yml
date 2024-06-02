@@ -6,10 +6,10 @@ eureka:
     register-with-eureka: true
     fetch-registry: true
     service-url:
-      defaultZone: http://eureka:8761/
+      defaultZone: ${EUREKA_SERVER_URL}
 
-    # instance:
-    #   hostname: http://eureka
+    instance:
+      hostname: ${HOSTNAME}
 
 discovery:
   client:
@@ -42,7 +42,7 @@ spring:
             allowedMethods: "*"
       routes:
         - id: xgarage-kernel-service
-          uri: http://161.8.109.180:5050
+          uri: ${KERNEL_URL}
 
           predicates:
             - Path=/api/**
@@ -51,7 +51,7 @@ spring:
             - SetResponseHeader=Access-Control-Allow-Methods, *
             - SetResponseHeader=Access-Control-Expose-Headers, *
         - id: xgarage-core-service
-          uri: http://161.8.109.180:4040
+          uri: ${CORE_URL}
           predicates:
             - Path=/core/**
           filters:
@@ -59,12 +59,12 @@ spring:
             - SetResponseHeader=Access-Control-Allow-Origin, *
             - SetResponseHeader=Access-Control-Allow-Methods, *
             - SetResponseHeader=Access-Control-Expose-Headers, *
-        - id: xgarage-shop-service
-          uri: http://161.8.109.180:SHOP_PORT}
-          predicates:
-            - Path=/store/**
-          filters:
-            - AuthFilter
-            - SetResponseHeader=Access-Control-Allow-Origin, *
-            - SetResponseHeader=Access-Control-Allow-Methods, *
-            - SetResponseHeader=Access-Control-Expose-Headers, *
+        # - id: xgarage-shop-service
+        #   uri: http://161.8.109.180:SHOP_PORT}
+        #   predicates:
+        #     - Path=/store/**
+        #   filters:
+        #     - AuthFilter
+        #     - SetResponseHeader=Access-Control-Allow-Origin, *
+        #     - SetResponseHeader=Access-Control-Allow-Methods, *
+        #     - SetResponseHeader=Access-Control-Expose-Headers, *
