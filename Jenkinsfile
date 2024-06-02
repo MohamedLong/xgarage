@@ -9,7 +9,7 @@ pipeline {
     stages {
         stage('Checkout Git Repository') {
             steps {
-                git branch: 'main', credentialsId: 'jenkins_live', url: 'https://github.com/MohamedLong/xgarage.git'
+                git branch: 'docker-compose', credentialsId: 'jenkins_live', url: 'https://github.com/MohamedLong/xgarage.git'
 
             }
         }
