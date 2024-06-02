@@ -1,9 +1,9 @@
 export const config = {
-  apiUrl: 'http://192.168.49.2:30001/api',
-  coreApiUrl: 'http://192.168.49.2:30001/core/api/v1',
-  storeApiUrl: 'http://192.168.49.2:30001/store/api/v1',
-  purchaseApiUrl: 'http://192.168.49.2:30001',
-  dashboardUrl: 'http://192.168.49.2:30001/api/v1/dashboard',
+  apiUrl: 'http://localhost:6060/api',
+  coreApiUrl: 'http://localhost:6060/core/api/v1',
+  storeApiUrl: 'http://localhost:6060/store/api/v1',
+  purchaseApiUrl: 'http://localhost:6060',
+  dashboardUrl: 'http://localhost:6060/api/v1/dashboard',
 };
 
 
