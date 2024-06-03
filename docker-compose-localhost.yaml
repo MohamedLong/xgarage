@@ -1,0 +1,93 @@
+version: '3'
+
+networks:
+  xgarage-network:
+
+services:
+
+
+##########   ANGULAR  ##############
+
+
+  angular:
+    image: angular-images
+    container_name: angular
+    build:
+      context: ../angular
+      dockerfile: Dockerfile      
+    networks:
+      - xgarage-network
+    ports:
+     - 8080:80
+
+
+##########   EUREKA  ##############
+
+
+  eureka:
+    image: eureka-server-image
+    container_name: eureka
+    build:
+      context: ../registryservice
+      dockerfile: Dockerfile
+    ports:
+     - 8761:8761
+    networks:
+      - xgarage-network
+
+
+##########   GATWAY  ##############
+
+
+  gateway:
+    build:
+      context: ../gatewayservice
+      dockerfile: Dockerfile
+    ports:
+     - "6060:6060"
+    networks:
+      - xgarage-network
+    depends_on:
+      - eureka
+    environment:
+        EUREKA_SERVER_URL: http://eureka:8761/eureka/ 
+        HOSTNAME: http://eureka
+        KERNEL_URL: http://kernel:5050
+        CORE_URL: http://core:4040
+
+
+##########   KERNEL  ##############
+
+
+  kernel:
+    build:
+      context: ../kernelservice
+      dockerfile: Dockerfile
+    ports:
+     - "5050:5050"
+    networks:
+      - xgarage-network
+    depends_on:
+      - eureka
+    environment:
+        EUREKA_SERVER_URL: http://eureka:8761/eureka/ 
+        HOSTNAME: http://eureka
+
+
+
+##########   CORE  ##############
+
+
+  core:
+    build:
+      context: ../coreservice
+      dockerfile: Dockerfile
+    ports:
+     - "4040:4040"
+    networks:
+      - xgarage-network
+    depends_on:
+      - eureka
+    environment:
+        EUREKA_SERVER_URL: http://eureka:8761/eureka/ 
+        HOSTNAME: http://eureka

@@ -9,27 +9,24 @@ services:
 ##########   ANGULAR  ##############
 
 
-  angular:
-    image: angular-images
-    container_name: angular
-    build:
-      context: ../angular
-      dockerfile: Dockerfile      
-    networks:
-      - xgarage-network
-    ports:
-     - 8080:80
+  # angular:
+  #   image: angular-images
+  #   container_name: angular
+  #   build:
+  #     context: ../angular
+  #     dockerfile: Dockerfile      
+  #   networks:
+  #     - xgarage-network
+  #   ports:
+  #    - 8080:80
 
 
 ##########   EUREKA  ##############
 
 
   eureka:
-    image: eureka-server-image
+    image: longali/registryservice:latest
     container_name: eureka
-    build:
-      context: ../registryservice
-      dockerfile: Dockerfile
     ports:
      - 8761:8761
     networks:
@@ -40,9 +37,8 @@ services:
 
 
   gateway:
-    build:
-      context: ../gatewayservice
-      dockerfile: Dockerfile
+    image: longali/gatewayservice:latest
+    container_name: gateway
     ports:
      - "6060:6060"
     networks:
@@ -56,38 +52,28 @@ services:
         CORE_URL: http://core:4040
 
 
-##########   KERNEL  ##############
 
+# networks:
+#   spring:  # Define the new network
 
-  kernel:
-    build:
-      context: ../kernelservice
-      dockerfile: Dockerfile
-    ports:
-     - "5050:5050"
-    networks:
-      - xgarage-network
-    depends_on:
-      - eureka
-    environment:
-        EUREKA_SERVER_URL: http://eureka:8761/eureka/ 
-        HOSTNAME: http://eureka
+# services:
+#   eureka:
+#     image: longali/registryservice:latest
+#     container_name: eureka
+#     ports:
+#       - "8761:8761"  # Expose the port to the host machine
+#     networks:
+#       - spring  # Connect eureka to the new network
 
-
-
-##########   CORE  ##############
-
-
-  core:
-    build:
-      context: ../coreservice
-      dockerfile: Dockerfile
-    ports:
-     - "4040:4040"
-    networks:
-      - xgarage-network
-    depends_on:
-      - eureka
-    environment:
-        EUREKA_SERVER_URL: http://eureka:8761/eureka/ 
-        HOSTNAME: http://eureka
+#   gateway:
+#     image: longali/gatewayservice:latest
+#     container_name: gateway
+#     ports:
+#       - "6060:6060"  # Replace with your desired gateway port
+#     depends_on:
+#       - eureka  # Ensure Eureka starts first
+#     # restart: on-failure
+#     networks:
+#       - spring  # Connect gateway to the new network
+#     # environment:
+#     #   - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://172.23.0.2:8761/  # Registration URL (can still use service name)
