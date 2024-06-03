@@ -1,9 +1,9 @@
 export const config = {
-  apiUrl: 'http://localhost:6060/api',
-  coreApiUrl: 'http://localhost:6060/core/api/v1',
-  storeApiUrl: 'http://localhost:6060/store/api/v1',
-  purchaseApiUrl: 'http://localhost:6060',
-  dashboardUrl: 'http://localhost:6060/api/v1/dashboard',
+  apiUrl: 'http://xgarage.ip-teamway.com:6060/api',
+  coreApiUrl: 'http://xgarage.ip-teamway.com:6060/core/api/v1',
+  storeApiUrl: 'http://xgarage.ip-teamway.com:6060/store/api/v1',
+  purchaseApiUrl: 'http://xgarage.ip-teamway.com:6060',
+  dashboardUrl: 'http://xgarage.ip-teamway.com:6060/api/v1/dashboard',
 };
 
 
