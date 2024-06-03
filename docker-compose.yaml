@@ -10,11 +10,8 @@ services:
 
 
   angular:
-    image: angular-images
-    container_name: angular
-    build:
-      context: ../angular
-      dockerfile: Dockerfile      
+    image: longali/xgarageangular:latest
+    container_name: angular   
     networks:
       - xgarage-network
     ports:
