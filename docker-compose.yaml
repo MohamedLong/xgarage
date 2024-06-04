@@ -15,7 +15,7 @@ services:
     networks:
       - xgarage-network
     ports:
-     - 80:80
+     - 8080:80
 
 
 ##########   EUREKA  ##############
