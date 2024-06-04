@@ -1,3 +1,4 @@
+// This Pipeline is used to generate Docker image for Eureka save it local of course then push the image to Docker hub 
 pipeline {
     agent {
         label 'spring'
@@ -6,7 +7,7 @@ pipeline {
         maven '3.9.3'
     }
     options {
-        buildDiscarder(logRotator(numToKeepStr: '1')) // Keeps the last 1 builds
+        buildDiscarder(logRotator(numToKeepStr: '1')) 
     }
 
     stages {
@@ -38,13 +39,5 @@ pipeline {
             }
             
         }
-        // stage('Deploy to Kubernetes') {
-        //     steps {
-        //         script {
-        //             // Use kubectl to apply deployment YAML
-        //             sh 'kubectl apply -f registry_deployment.yaml'
-        //         }
-        //     }
-        // }
     }
 }
