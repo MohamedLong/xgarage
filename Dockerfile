@@ -26,7 +26,7 @@ FROM nginx:alpine
 COPY --from=build /app/dist/ultima/ /usr/share/nginx/html
 
 # Expose port 80 to the outside world
-# EXPOSE 80
+EXPOSE 80
 
 # Start Nginx server when the container starts
 CMD ["nginx", "-g", "daemon off;"]
