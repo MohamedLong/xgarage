@@ -1,3 +1,5 @@
+// This Pipeline is used to generate Docker image for Gatway save it local of course then push the image to Docker hub 
+
 pipeline {
     agent {
         label 'spring'
@@ -31,9 +33,6 @@ pipeline {
                   sh 'docker login -u longali -p ${dockerhubpwd}'
                   
                   sh 'docker push longali/gatewayservice'
-
-                  sh "docker images"
-
                 }
                 }
             }
